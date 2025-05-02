@@ -1,0 +1,24 @@
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Espaço entre os botões */
+    margin: 1rem 0;
+  }
+  
+  .icon-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .icon-button img {
+    width: 40px;  /* Ajuste conforme necessário */
+    height: 40px;
+  }
+  
+  .tooltip {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+  }
+  

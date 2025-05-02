@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7fafc;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2d6a4f;
+    margin-bottom: 2rem;
+}
+
+.days-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.day-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+}
+
+.day-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.meal-section {
+    margin-bottom: 1.5rem;
+}
+
+.meal-title {
+    font-size: 1rem;
+    font-weight: semi-bold;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+}
+
+.meals-list {
+    margin-bottom: 1rem;
+}
+
+.meal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f4f8;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.remove-btn {
+    background-color: transparent;
+    border: none;
+    color: #e53e3e;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.add-meal-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #48bb78;
+    color: white;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.add-meal-btn:hover {
+    background-color: #38a169;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.input-container {
+    margin-bottom: 1rem;
+}
+
+.input-label {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    border-color: #48bb78;
+    outline: none;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel-btn,
+.add-btn {
+    padding: 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.cancel-btn {
+    background-color: #edf2f7;
+    border: 1px solid #ccc;
+}
+
+.add-btn {
+    background-color: #48bb78;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.add-btn:hover {
+    background-color: #38a169;
+}
