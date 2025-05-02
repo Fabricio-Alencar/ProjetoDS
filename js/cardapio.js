@@ -68,6 +68,7 @@ function menuPlanner() {
       abrirModalAdicionar() {
         this.mostrarModal = true;  // Abre o modal
         this.novasReceitas = [''];  // Reseta as receitas
+        console.log(this.cardapio); // Verificar o conteúdo de cardápio
       },
     
       // Função que adiciona um campo para uma nova receita
@@ -90,15 +91,13 @@ function menuPlanner() {
         });
         this.novasReceitas = [''];  // Reseta as receitas
         this.mostrarModal = false;  // Fecha o modal
+        console.log(this.cardapio); // Verificar o conteúdo de cardápio após adicionar
       },
   
       // Função que remove uma receita do cardápio
       removerItem(dia, refeicao, index) {
         this.cardapio[dia][refeicao].splice(index, 1); // Remove a receita específica
+        console.log(this.cardapio); // Verificar o conteúdo de cardápio após remoção
       }
     };
-  }
-
-  console.log(this.cardapio); 
-  
-  
+}

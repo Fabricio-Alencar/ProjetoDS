@@ -83,7 +83,6 @@
           </template>
         </div>
 
-    
         <!-- Almoço -->
         <div class="linha-refeicao">
           <div class="celula-label">Almoço</div>
@@ -103,7 +102,6 @@
           </template>
         </div>
 
-    
         <!-- Jantar -->
         <div class="linha-refeicao">
           <div class="celula-label">Jantar</div>
@@ -122,9 +120,8 @@
             </div>
           </template>
         </div>
-
-
-
+      </div>
+    </div>
 
     <!-- Modal para adicionar refeição -->
     <div class="modal" x-show="mostrarModal" x-cloak>
@@ -151,13 +148,29 @@
         <label style="margin-top: 0.5rem;">Receitas:</label>
         <template x-for="(receita, index) in novasReceitas" :key="index">
           <div style="display: flex; align-items: center; margin-top: 0.3rem;">
-            <select x-model="novasReceitas[index]" style="flex: 1;">
-              <template x-for="item in receitasUsuario" :key="item">
-                <option x-text="item" :value="item"></option>
-              </template>
-            </select>
+            <div x-data="{ termo: novasReceitas[index], aberto: false }" class="autocomplete-container">
+              <input
+                type="text"
+                x-model="termo"
+                @input="novasReceitas[index] = termo; aberto = true"
+                @focus="aberto = true"
+                @click.away="aberto = false"
+                placeholder="Digite ou selecione uma receita"
+                class="autocomplete-input"
+              />
+              <ul x-show="aberto" class="autocomplete-list">
+                <template x-for="item in receitasUsuario.filter(r => r.toLowerCase().includes(termo.toLowerCase()))" :key="item">
+                  <li
+                    @click="termo = item; novasReceitas[index] = item; aberto = false"
+                    x-text="item"
+                    class="autocomplete-item"
+                  ></li>
+                </template>
+              </ul>
+            </div>
             <button @click="removerLinhaReceita(index)" style="margin-left: 0.5rem;">🗑️</button>
           </div>
+          
         </template>
 
         <button @click="adicionarLinhaReceita" style="margin-top: 0.5rem;">+ Adicionar mais</button>
@@ -183,6 +196,3 @@
 
 </body>
 </html>
-
-
-
