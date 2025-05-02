@@ -1,103 +1,148 @@
+// Definir o usuário e exibir a mensagem de boas-vindas
 const usuario = "Ana";
 document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
 
-
-/*
-document.addEventListener('alpine:init', () => {
-  Alpine.data('menuPlanner', () => ({
+// Função que representa o planejamento do menu
+function menuPlanner() {
+  return {
+    // Dias da semana
     dias: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
-    refeicoes: ['Café da Manhã', 'Almoço', 'Jantar'],
-    cardapio: {},
-    mostrarModal: false,
-    diaSelecionado: '',
-    refeicaoSelecionada: '',
-    novaReceita: '',
 
-    init() {
-      this.dias.forEach(dia => {
-        this.cardapio[dia] = {
-          'Café da Manhã': [],
-          'Almoço': [],
-          'Jantar': []
-        };
+    // Cardápio da semana
+    cardapio: {
+      Segunda: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Terça: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Quarta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Quinta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Sexta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Sábado: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
+      Domingo: { 'Café da Manhã': [], Almoço: [], Jantar: [] }
+    },
+
+    // Variáveis para controlar o estado do modal e inserção de receitas
+    mostrarModal: false,
+    novoDia: 'Segunda',
+    novaRefeicao: 'Café da Manhã',
+    novasReceitas: [''],  // Armazenar novas receitas a serem adicionadas
+
+    // Receitas cadastradas pelo usuário
+    receitasUsuario: [
+      {
+        titulo: 'Bolo de Cenoura',
+        tipo: 'doce',
+        ingredientes: [
+          { produto: 'Cenoura', quantidade: '2', unidade: 'unidades' },
+          { produto: 'Açúcar', quantidade: '2', unidade: 'xícaras' },
+          { produto: 'Farinha de trigo', quantidade: '2', unidade: 'xícaras' }
+        ],
+        modoPreparo: [
+          'Bata as cenouras com os outros ingredientes.',
+          'Despeje a massa em uma forma untada.',
+          'Asse a 180°C por 30 minutos.'
+        ],
+        utensilios: ['Forma de bolo', 'Liquidificador'],
+        tempoPreparo: '40 minutos',
+        porcoes: '10 porções'
+      },
+      {
+        titulo: 'Pão Caseiro',
+        tipo: 'salgado',
+        ingredientes: [
+          { produto: 'Farinha de trigo', quantidade: '5', unidade: 'xícaras' },
+          { produto: 'Água', quantidade: '300', unidade: 'ml' },
+          { produto: 'Fermento', quantidade: '10', unidade: 'g' }
+        ],
+        modoPreparo: [
+          'Misture os ingredientes e deixe a massa descansar por 1 hora.',
+          'Modele e asse a 180°C por 45 minutos.'
+        ],
+        utensilios: ['Forma de pão', 'Panela'],
+        tempoPreparo: '1 hora e 30 minutos',
+        porcoes: '12 porções'
+      }
+    ],
+
+    // Função para adicionar uma receita ao cardápio
+    adicionarReceita() {
+      this.novasReceitas.forEach(nome => {
+        const limpa = nome.trim();
+        if (limpa && !this.cardapio[this.novoDia][this.novaRefeicao].includes(limpa)) {
+          this.cardapio[this.novoDia][this.novaRefeicao].push(limpa);
+        }
+      });
+
+      // Resetar as receitas inseridas e fechar o modal
+      this.novasReceitas = [''];
+      this.mostrarModal = false;
+    },
+
+    // Função para abrir o modal de adicionar receita
+    abrirModalAdicionar() {
+      this.mostrarModal = true;
+    },
+
+    // Função para adicionar uma linha de receita no modal
+    adicionarLinhaReceita() {
+      this.novasReceitas.push('');
+    },
+
+    // Função para remover uma linha de receita no modal
+    removerLinhaReceita(index) {
+      this.novasReceitas.splice(index, 1);
+    },
+
+    // Função para filtrar as receitas disponíveis no autocomplete
+    filtrarReceitas(index) {
+      const termo = this.novasReceitas[index].toLowerCase();
+      return this.receitasUsuario.filter(r => {
+        return r.titulo.toLowerCase().includes(termo) && !this.novasReceitas.includes(r.titulo);
       });
     },
 
-    abrirModal(dia, refeicao) {
-      this.diaSelecionado = dia;
-      this.refeicaoSelecionada = refeicao;
-      this.mostrarModal = true;
-      this.novaReceita = '';
-    },
+    // Função para gerar a lista de compras
+    gerarListaCompras() {
+      const ingredientesTotais = {};
 
-    adicionarReceita() {
-      if (this.novaReceita.trim()) {
-        this.cardapio[this.diaSelecionado][this.refeicaoSelecionada].push(this.novaReceita);
-        this.mostrarModal = false;
-      }
-    },
+      // Itera sobre os dias e refeições, somando os ingredientes necessários
+      for (const dia of this.dias) {
+        for (const refeicao of ['Café da Manhã', 'Almoço', 'Jantar']) {
+          for (const nomeReceita of this.cardapio[dia][refeicao]) {
+            const receita = this.receitasUsuario.find(r => r.titulo === nomeReceita);
+            if (!receita) continue;
 
-    removerItem(dia, refeicao, index) {
-      this.cardapio[dia][refeicao].splice(index, 1);
-    }
-  }))
-});
+            // Processa os ingredientes
+            for (const ingrediente of receita.ingredientes) {
+              const chave = `${ingrediente.produto}|${ingrediente.unidade}`;
+              const quantidade = parseFloat(ingrediente.quantidade.replace(',', '.')) || 0;
 
-*/
-
-
-function menuPlanner() {
-    return {
-      dias: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
-      cardapio: {
-        Segunda: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Terça: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Quarta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Quinta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Sexta: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Sábado: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-        Domingo: { 'Café da Manhã': [], Almoço: [], Jantar: [] },
-      },
-      mostrarModal: false,  // Modal inicia oculto
-      novoDia: 'Segunda',
-      novaRefeicao: 'Café da Manhã',
-      novasReceitas: [''],
-      receitasUsuario: ['Omelete', 'Salada', 'Macarrão', 'Tapioca'],
-      
-      // Função que abre o modal ao clicar no botão
-      abrirModalAdicionar() {
-        this.mostrarModal = true;  // Abre o modal
-        this.novasReceitas = [''];  // Reseta as receitas
-        console.log(this.cardapio); // Verificar o conteúdo de cardápio
-      },
-    
-      // Função que adiciona um campo para uma nova receita
-      adicionarLinhaReceita() {
-        this.novasReceitas.push(''); 
-      },
-    
-      // Função que remove uma receita
-      removerLinhaReceita(index) {
-        this.novasReceitas.splice(index, 1);  // Remove a receita do array
-      },
-    
-      // Função que adiciona as receitas selecionadas ao cardápio
-      adicionarReceita() {
-        this.novasReceitas.forEach(receita => {
-          const limpa = receita.trim();
-          if (limpa && this.receitasUsuario.includes(limpa)) {
-            this.cardapio[this.novoDia][this.novaRefeicao].push(limpa); // Adiciona a receita ao cardápio
+              if (!ingredientesTotais[chave]) {
+                ingredientesTotais[chave] = 0;
+              }
+              ingredientesTotais[chave] += quantidade;
+            }
           }
-        });
-        this.novasReceitas = [''];  // Reseta as receitas
-        this.mostrarModal = false;  // Fecha o modal
-        console.log(this.cardapio); // Verificar o conteúdo de cardápio após adicionar
-      },
-  
-      // Função que remove uma receita do cardápio
-      removerItem(dia, refeicao, index) {
-        this.cardapio[dia][refeicao].splice(index, 1); // Remove a receita específica
-        console.log(this.cardapio); // Verificar o conteúdo de cardápio após remoção
+        }
       }
-    };
+
+      // Cria a lista final de compras
+      const listaFinal = [];
+      for (const chave in ingredientesTotais) {
+        const [produto, unidade] = chave.split('|');
+        listaFinal.push(`${ingredientesTotais[chave]} ${unidade} de ${produto}`);
+      }
+
+      console.log('Lista de Compras:', listaFinal);
+      return listaFinal;
+    },
+
+    // Variáveis para controlar o modal da lista de compras
+    mostrarModalCompras: false,
+    listaDeCompras: [],
+
+    // Função para abrir o modal de compras e gerar a lista
+    abrirModalCompras() {
+      this.listaDeCompras = this.gerarListaCompras();  // Gerar lista de compras ao abrir o modal
+      this.mostrarModalCompras = true;
+    }
+  };
 }

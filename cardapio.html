@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="static/css/css_cardapio/menu.css">
   <link rel="stylesheet" href="static/css/css_cardapio/modal.css">
   <link rel="stylesheet" href="static/css/css_cardapio/buttons.css">
+  <link rel="stylesheet" href="static/css/css_cardapio/modal2.css">
   <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
 <body x-data="menuPlanner">
@@ -39,12 +40,11 @@
     </div>
 
     <div class="buttons">
-      <!-- Botão Adicionar Refeição -->
       <div class="icon-button add" id="addRecipeBtn" @click="abrirModalAdicionar">
         <img src="static/imagens/mais.png" alt="Adicionar Refeição">
         <span class="tooltip">Adicionar Refeição</span>
       </div>
-      <div class="icon-button list" id="lista_de_compras">
+      <div class="icon-button list" id="lista_de_compras" @click="abrirModalCompras">
         <img src="static/imagens/bolo.png" alt="Lista de compras">
         <span class="tooltip">Lista de compras</span>
       </div>
@@ -52,7 +52,6 @@
 
     <div class="weekly-menu">
       <div class="grid-colunas">
-        <!-- Cabeçalho dos dias -->
         <div class="linha-header">
           <div class="celula-label"></div>
           <div class="celula-dia">Segunda</div>
@@ -64,7 +63,6 @@
           <div class="celula-dia">Domingo</div>
         </div>
     
-        <!-- Café da Manhã -->
         <div class="linha-refeicao">
           <div class="celula-label">Café da Manhã</div>
           <template x-for="dia in dias" :key="dia">
@@ -83,7 +81,6 @@
           </template>
         </div>
 
-        <!-- Almoço -->
         <div class="linha-refeicao">
           <div class="celula-label">Almoço</div>
           <template x-for="dia in dias" :key="dia">
@@ -102,7 +99,6 @@
           </template>
         </div>
 
-        <!-- Jantar -->
         <div class="linha-refeicao">
           <div class="celula-label">Jantar</div>
           <template x-for="dia in dias" :key="dia">
@@ -123,46 +119,42 @@
       </div>
     </div>
 
-    <!-- Modal para adicionar refeição -->
     <div class="modal" x-show="mostrarModal" x-cloak>
       <div class="modal-content">
         <h3>Adicionar Refeições</h3>
 
-        <!-- Selecionar dia da semana -->
-        <label>Dia:</label>
+        <label>Dia da Semana:</label>
         <select x-model="novoDia">
           <template x-for="dia in dias" :key="dia">
             <option x-text="dia"></option>
           </template>
         </select>
 
-        <!-- Tipo de refeição -->
-        <label style="margin-top: 0.5rem;">Refeição:</label>
+        <label style="margin-top: 0.5rem;">Tipo de Refeição:</label>
         <select x-model="novaRefeicao">
           <option value="Café da Manhã">Café da Manhã</option>
           <option value="Almoço">Almoço</option>
           <option value="Jantar">Jantar</option>
         </select>
 
-        <!-- Inputs múltiplos -->
         <label style="margin-top: 0.5rem;">Receitas:</label>
         <template x-for="(receita, index) in novasReceitas" :key="index">
           <div style="display: flex; align-items: center; margin-top: 0.3rem;">
             <div x-data="{ termo: novasReceitas[index], aberto: false }" class="autocomplete-container">
               <input
                 type="text"
-                x-model="termo"
-                @input="novasReceitas[index] = termo; aberto = true"
+                x-model="novasReceitas[index]"
+                @input="aberto = true"
                 @focus="aberto = true"
                 @click.away="aberto = false"
                 placeholder="Digite ou selecione uma receita"
                 class="autocomplete-input"
               />
               <ul x-show="aberto" class="autocomplete-list">
-                <template x-for="item in receitasUsuario.filter(r => r.toLowerCase().includes(termo.toLowerCase()))" :key="item">
+                <template x-for="item in filtrarReceitas(index)" :key="item.titulo">
                   <li
-                    @click="termo = item; novasReceitas[index] = item; aberto = false"
-                    x-text="item"
+                    @click="novasReceitas[index] = item.titulo; aberto = false; termo = item.titulo"
+                    x-text="item.titulo"
                     class="autocomplete-item"
                   ></li>
                 </template>
@@ -170,9 +162,8 @@
             </div>
             <button @click="removerLinhaReceita(index)" style="margin-left: 0.5rem;">🗑️</button>
           </div>
-          
         </template>
-
+        
         <button @click="adicionarLinhaReceita" style="margin-top: 0.5rem;">+ Adicionar mais</button>
 
         <div style="margin-top: 1rem; text-align: right;">
@@ -181,14 +172,26 @@
         </div>
       </div>
     </div>
-  
   </div>
-</div>
-</div>
+
+  <!-- Modal de Lista de Compras -->
+    <div x-show="mostrarModalCompras" class="modal2-overlay" style="display: none;">
+      <div class="modal2-conteudo">
+        <h2 class="modal2-titulo">Lista de Compras</h2>
+        <ul class="modal2-lista">
+          <template x-for="item in listaDeCompras" :key="item">
+            <li class="modal2-item">• <span x-text="item"></span></li>
+          </template>
+        </ul>
+        <button @click="mostrarModalCompras = false" class="botao-fechar-modal2">
+          Fechar
+        </button>
+      </div>
+    </div>
 
   <footer>
     <div class="footer-content">
-        <p>Feito com ❤️</p>
+      <p>Feito com ❤️</p>
     </div>
   </footer>
 
