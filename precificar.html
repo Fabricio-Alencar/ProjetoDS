@@ -58,19 +58,40 @@
 
 <!-- Modal de precificação -->
 <div id="modalPrecificar" class="modal" style="display: none;">
-  <div class="modal-content">
-    <h2 id="tituloReceitaModal">Precificar Receita</h2>
-    <div id="ingredientesFormulario"></div>
-    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
-      <button onclick="confirmarPreco()" style="background-color: #704214; color: white; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer;">
-        Confirmar
+  <div class="modal-container">
+    <div class="modal-header">
+      <div>
+        <h2 id="tituloReceitaModal" class="modal-title">Nome da Receita</h2>
+      </div>
+      <button onclick="fecharModal()" class="close-btn">
+        <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
       </button>
-      <button onclick="fecharModal()" style="background-color: #ccc; color: black; padding: 10px 15px; border: none; border-radius: 8px; cursor: pointer;">
-        Cancelar
-      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="ingredient-table">
+        <div class="ingredient-header">
+          <div class="ingredient-name">Ingrediente</div>
+          <div class="ingredient-price">Valor</div>
+          <div class="ingredient-quantity">Quantidade</div>
+          <div class="ingredient-name">Unidade de Medida</div>
+
+        </div>
+
+        <div id="ingredientesFormulario">
+          <!-- Os ingredientes serão inseridos dinamicamente aqui -->
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button onclick="confirmarPreco()" class="confirm-btn">Confirmar</button>
     </div>
   </div>
 </div>
+
 
  
 

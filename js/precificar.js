@@ -125,26 +125,47 @@ function renderReceitas() {
 
 let receitaAtual = null;
 
+// Exemplo de ingredientes com nome, unidade e outras informações
+const ingredientes = [
+  { nome: 'Macarrão', unidade: 'g' },
+  { nome: 'Frango', unidade: 'kg' },
+  { nome: 'Queijo', unidade: 'g' }
+];
+
 function abrirModalPrecificar(receita) {
-    receitaAtual = receita;
-    document.getElementById("tituloReceitaModal").textContent = receita.titulo;
+  receitaAtual = receita;
+  document.getElementById('tituloReceitaModal').textContent = receita.titulo;
 
-    const container = document.getElementById("ingredientesFormulario");
-    container.innerHTML = "";
+  const container = document.getElementById('ingredientesFormulario');
+  container.innerHTML = ''; // Limpa o modal
 
-    receita.ingredientes.forEach((ingrediente, index) => {
-        const div = document.createElement("div");
-        div.className = "ingrediente-item";
-        div.innerHTML = `
-            <label>${ingrediente.produto.toUpperCase()} (${ingrediente.unidade}):</label>
-            <input type="number" placeholder="Valor em R$" step="0.01" id="valor-${index}" />
-            <input type="number" placeholder="Quantidade comprada" step="0.01" id="quantidade-${index}" />
-        `;
-        container.appendChild(div);
-    });
+  receita.ingredientes.forEach((ingrediente, index) => {
+    const row = document.createElement('div');
+    row.className = 'ingredient-row';
 
-    document.getElementById("modalPrecificar").style.display = "flex";
+    row.innerHTML = `
+      <div class="ingredient-name">${ingrediente.produto}</div>
+      <div class="ingredient-price">
+        <input type="number" min="0" step="0.01" placeholder="Preço" class="price-input" id="valor-${index}">
+      </div>
+      <div class="ingredient-quantity">
+        <input type="number" min="0" placeholder="Qtd" class="quantity-input" id="quantidade-${index}">
+        <span class="unit-text">${ingrediente.unidade}</span>
+      </div>
+    `;
+
+
+    container.appendChild(row);
+  });
+
+  document.getElementById('modalPrecificar').style.display = 'flex';
 }
+
+
+function fecharModal() {
+  document.getElementById('modalPrecificar').style.display = 'none';
+}
+
 
 function fecharModal() {
     document.getElementById("modalPrecificar").style.display = "none";
