@@ -1,0 +1,37 @@
+.amigos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+.amigo-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background: #f9f9f9;
+  }
+
+.amigo-foto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ddd;
+    background-image: url('https://via.placeholder.com/50');
+    background-size: cover;
+    background-position: center;
+    margin-right: 10px;
+  }
+
+.amigo-nome {
+    flex: 1;
+    font-weight: bold;
+    font-size: 20px;
+
+  }
+
+.amigo-acoes button {
+    margin-left: 5px;
+  }

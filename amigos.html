@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="static/css/css_geral/container.css">
   <link rel="stylesheet" href="static/css/css_geral/navigation.css">
   <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
+  <link rel="stylesheet" href="static/css/css_amigos/amigos.css">  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
 </head>
 <body>
 
@@ -32,6 +33,10 @@
         <span class="option active">Amigos</span>
         <a href="cardapio.html" class="option">Cardápio Semanal</a>
       </div>
+
+      <!-- 🔽 Adicionando funcionalidade de amigos -->
+      <button class="add-amigo-btn" onclick="adicionarAmigo()">+</button>
+      <div id="listaAmigos" class="amigos-lista"></div>
     </div>
   </div>
 
@@ -40,10 +45,6 @@
       <p>Feito com ❤️</p>
     </div>
   </footer>
-</body>
-</html>
 
-<script>
-    const usuario = "Ana";
-    document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
-</script>    
+<script src="js/amigos.js"></script>
+  

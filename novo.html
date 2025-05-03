@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Amigos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="static/css/css_geral/reset.css">
+  <link rel="stylesheet" href="static/css/css_geral/global.css">
+  <link rel="stylesheet" href="static/css/css_geral/header_and_footer.css">
+  <link rel="stylesheet" href="static/css/css_geral/container.css">
+  <link rel="stylesheet" href="static/css/css_geral/navigation.css">
+  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
+  <style>
+    .add-amigo-btn {
+      font-size: 24px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+
+    .amigos-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .amigo-box {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+
+    .amigo-foto {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #ddd;
+      background-image: url('https://via.placeholder.com/50');
+      background-size: cover;
+      background-position: center;
+      margin-right: 10px;
+    }
+
+    .amigo-nome {
+      flex: 1;
+      font-weight: bold;
+    }
+
+    .amigo-acoes button {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <div class="header-title" id="usuarioTitulo"></div>
+    </div>
+  </header>
+
+  <div class="logo-circle">
+    <img src="static/imagens/Logo_site_trabalho.png" alt="Logo do Site"/>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <div class="nav-options">
+        <a href="minhas_receitas.html" class="option">Minhas Receitas</a>
+        <a href="precificar.html" class="option">Precificar Receita</a>
+        <span class="option active">Amigos</span>
+        <a href="cardapio.html" class="option">Cardápio Semanal</a>
+      </div>
+
+      <!-- 🔽 Adicionando funcionalidade de amigos -->
+      <button class="add-amigo-btn" onclick="adicionarAmigo()">+</button>
+      <div id="listaAmigos" class="amigos-lista"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>Feito com ❤️</p>
+    </div>
+  </footer>
+
+  <script>
+    const usuario = "Ana";
+    document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
+
+    const amigos = [];
+    const receitas = ["Bolo de Cenoura", "Torta Salgada", "Panqueca", "Feijoada"];
+
+    function adicionarAmigo() {
+      const nome = prompt("Digite o nome do amigo:");
+      if (nome && !amigos.find(a => a.nome === nome)) {
+        amigos.push({ nome, foto: 'https://via.placeholder.com/50' });
+        renderizarAmigos();
+      } else if (amigos.find(a => a.nome === nome)) {
+        alert("Este amigo já está na lista.");
+      }
+    }
+
+    function excluirAmigo(index) {
+      amigos.splice(index, 1);
+      renderizarAmigos();
+    }
+
+    function compartilharReceita(nome) {
+      const receita = prompt(`Qual receita deseja compartilhar com ${nome}?\nOpções: ${receitas.join(", ")}`);
+      if (receitas.includes(receita)) {
+        alert(`Receita "${receita}" compartilhada com ${nome}!`);
+      } else {
+        alert("Receita inválida ou não encontrada.");
+      }
+    }
+
+    function renderizarAmigos() {
+      const container = document.getElementById("listaAmigos");
+      container.innerHTML = "";
+      amigos.forEach((amigo, index) => {
+        const div = document.createElement("div");
+        div.className = "amigo-box";
+
+        const foto = document.createElement("div");
+        foto.className = "amigo-foto";
+
+        const nome = document.createElement("div");
+        nome.className = "amigo-nome";
+        nome.textContent = amigo.nome;
+
+        const acoes = document.createElement("div");
+        acoes.className = "amigo-acoes";
+
+        const excluir = document.createElement("button");
+        excluir.textContent = "Excluir";
+        excluir.onclick = () => excluirAmigo(index);
+
+        const compartilhar = document.createElement("button");
+        compartilhar.textContent = "Compartilhar Receita";
+        compartilhar.onclick = () => compartilharReceita(amigo.nome);
+
+        acoes.appendChild(excluir);
+        acoes.appendChild(compartilhar);
+
+        div.appendChild(foto);
+        div.appendChild(nome);
+        div.appendChild(acoes);
+        container.appendChild(div);
+      });
+    }
+  </script>
+
+</body>
+</html>
