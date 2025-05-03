@@ -7,10 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="static/css/css_geral/reset.css">
   <link rel="stylesheet" href="static/css/css_geral/global.css">
-  <link rel="stylesheet" href="static/css/css_geral/header.css">
+  <link rel="stylesheet" href="static/css/css_geral/header_and_footer.css">
   <link rel="stylesheet" href="static/css/css_geral/container.css">
   <link rel="stylesheet" href="static/css/css_geral/navigation.css">
-  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
+  <link rel="stylesheet" href="static/css/css_geral/botoes_add_delete.css">
   <link rel="stylesheet" href="static/css/css_cardapio/menu.css">
   <link rel="stylesheet" href="static/css/css_cardapio/modal.css">
   <link rel="stylesheet" href="static/css/css_cardapio/buttons.css">
@@ -40,13 +40,13 @@
     </div>
 
     <div class="buttons">
-      <div class="icon-button add" id="addRecipeBtn" @click="abrirModalAdicionar">
+      <div class="icone_botao add" id="addRecipeBtn" @click="abrirModalAdicionar">
         <img src="static/imagens/mais.png" alt="Adicionar Refeição">
-        <span class="tooltip">Adicionar Refeição</span>
+        <span class="caixa_de_texto_botao">Adicionar Refeição</span>
       </div>
-      <div class="icon-button list" id="lista_de_compras" @click="abrirModalCompras">
+      <div class="icone_botao list" id="lista_de_compras" @click="abrirModalCompras">
         <img src="static/imagens/bolo.png" alt="Lista de compras">
-        <span class="tooltip">Lista de compras</span>
+        <span class="caixa_de_texto_botao">Lista de compras</span>
       </div>
     </div>
 

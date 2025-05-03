@@ -9,7 +9,7 @@
     box-sizing: border-box; /* Garantir que o box-sizing seja "border-box" para todos os elementos */
   }
   
-  img {
+img {
     max-width: 100%; /* Impede que as imagens ultrapassem o limite de largura */
     height: auto;
     display: block;
