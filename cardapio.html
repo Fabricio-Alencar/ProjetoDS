@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="static/css/css_geral/header_and_footer.css">
   <link rel="stylesheet" href="static/css/css_geral/container.css">
   <link rel="stylesheet" href="static/css/css_geral/navigation.css">
-  <link rel="stylesheet" href="static/css/css_geral/botoes_add_delete.css">
+  <link rel="stylesheet" href="static/css/css_geral/botoes.css">
   <link rel="stylesheet" href="static/css/css_cardapio/menu.css">
   <link rel="stylesheet" href="static/css/css_cardapio/modal.css">
-  <link rel="stylesheet" href="static/css/css_cardapio/buttons.css">
+  <link rel="stylesheet" href="static/css/css_cardapio/config_botoes.css">
   <link rel="stylesheet" href="static/css/css_cardapio/modal2.css">
   <script src="https://unpkg.com/alpinejs" defer></script>
 </head>
@@ -39,18 +39,20 @@
       </div>
     </div>
 
-
     <div class="botoes-lado-a-lado">
-      <div class="icone_botao2 add" id="addRecipeBtn" @click="abrirModalAdicionar">
-        <img src="static/imagens/mais.png" alt="Adicionar Refeição" class="img-add">
-        <span class="caixa_de_texto_botao">Adicionar Refeição</span>
+      <div class="icone_botao add" id="addRecipeBtn" @click="abrirModalAdicionar">
+          <img src="static/imagens/mais.png" alt="Adicionar Refeição" class="img-add">
+          <span class="caixa_de_texto_botao">Adicionar Refeição</span>
       </div>
     
-      <div class="icone_botao2 list" id="lista_de_compras" @click="abrirModalCompras">
-        <img src="static/imagens/prancheta.png" alt="Lista de Compras" class="img-list">
-        <span class="caixa_de_texto_botao">Lista de compras</span>
-      </div>
+      <div class="icone_botao prancheta" id="lista_de_compras" @click="abrirModalCompras">
+          <img src="static/imagens/prancheta.png" alt="Lista de Compras" class="img-prancheta">
+          <span class="caixa_de_texto_botao">Adicionar Refeição</span>
+        </div>
     </div>
+    
+    
+    
     
     
     

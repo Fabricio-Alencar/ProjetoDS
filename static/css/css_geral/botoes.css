@@ -12,15 +12,20 @@
     cursor: pointer;     /* Define o cursor como 'pointer' para indicar que o botão é clicável */
   }
   
-    .icone_botao.add {
+.icone_botao.add {
         background-color: #6efa72; /* Verde para adicionar */
         border-radius: 10px;
     }
 
-    .icone_botao.delete {
+.icone_botao.delete {
         background-color: #e49994; /* Vermelho para excluir */
         border-radius: 10px;
     }
+
+.icone_botao.prancheta {
+      background-color: #b4aca8; /* Vermelho para excluir */
+      border-radius: 5px;
+  }    
 
 
   /* Estilos para a imagem dentro do botão */
