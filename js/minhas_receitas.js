@@ -56,6 +56,23 @@ const modalPortions = document.getElementById('modalPortions');
 const addRecipeBtn = document.getElementById('addRecipeBtn');
 const deleteRecipeBtn = document.getElementById('deleteRecipeBtn');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Alerta o usuário que a funcionalidade de adicionar ainda não está pronta
 addRecipeBtn.addEventListener('click', () => {
   alert('Funcionalidade de adicionar receita ainda não implementada.');

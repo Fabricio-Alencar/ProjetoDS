@@ -39,16 +39,22 @@
       </div>
     </div>
 
-    <div class="buttons">
-      <div class="icone_botao add" id="addRecipeBtn" @click="abrirModalAdicionar">
-        <img src="static/imagens/mais.png" alt="Adicionar Refeição">
+
+    <div class="botoes-lado-a-lado">
+      <div class="icone_botao2 add" id="addRecipeBtn" @click="abrirModalAdicionar">
+        <img src="static/imagens/mais.png" alt="Adicionar Refeição" class="img-add">
         <span class="caixa_de_texto_botao">Adicionar Refeição</span>
       </div>
-      <div class="icone_botao list" id="lista_de_compras" @click="abrirModalCompras">
-        <img src="static/imagens/bolo.png" alt="Lista de compras">
+    
+      <div class="icone_botao2 list" id="lista_de_compras" @click="abrirModalCompras">
+        <img src="static/imagens/prancheta.png" alt="Lista de Compras" class="img-list">
         <span class="caixa_de_texto_botao">Lista de compras</span>
       </div>
     </div>
+    
+    
+    
+    
 
     <div class="weekly-menu">
       <div class="grid-colunas">
@@ -63,61 +69,76 @@
           <div class="celula-dia">Domingo</div>
         </div>
     
-        <div class="linha-refeicao">
-          <div class="celula-label">Café da Manhã</div>
-          <template x-for="dia in dias" :key="dia">
-            <div class="celula-item">
-              <template x-if="cardapio[dia]['Café da Manhã'].length > 0">
-                <ul class="receita-item">
-                  <template x-for="(item, index) in cardapio[dia]['Café da Manhã']" :key="index">
-                    <li x-text="item"></li>
-                  </template>
-                </ul>
-              </template>
-              <template x-if="cardapio[dia]['Café da Manhã'].length === 0">
-                <span></span>
-              </template>
-            </div>
-          </template>
-        </div>
+    <!-- Tabela do cardápio -->
+          <div class="linha-refeicao">
+            <div class="celula-label">Café da Manhã</div>
+            <template x-for="dia in dias" :key="dia">
+              <div class="celula-item">
+                <template x-if="cardapio[dia]['Café da Manhã'].length > 0">
+                  <ul class="receita-item">
+                    <template x-for="(item, index) in cardapio[dia]['Café da Manhã']" :key="index">
+                      <li>
+                        <span x-text="item"></span>
+                        <button @click="removerReceita(dia, 'Café da Manhã', index)" class="botao-excluir">❌</button>
+                      </li>
+                    </template>
+                  </ul>
+                </template>
+                <template x-if="cardapio[dia]['Café da Manhã'].length === 0">
+                  <span></span>
+                </template>
+              </div>
+            </template>
+          </div>
 
-        <div class="linha-refeicao">
-          <div class="celula-label">Almoço</div>
-          <template x-for="dia in dias" :key="dia">
-            <div class="celula-item">
-              <template x-if="cardapio[dia]['Almoço'].length > 0">
-                <ul class="receita-item">
-                  <template x-for="(item, index) in cardapio[dia]['Almoço']" :key="index">
-                    <li x-text="item"></li>
-                  </template>
-                </ul>
-              </template>
-              <template x-if="cardapio[dia]['Almoço'].length === 0">
-                <span></span>
-              </template>
-            </div>
-          </template>
-        </div>
+          <div class="linha-refeicao">
+            <div class="celula-label">Almoço</div>
+            <template x-for="dia in dias" :key="dia">
+              <div class="celula-item">
+                <template x-if="cardapio[dia]['Almoço'].length > 0">
+                  <ul class="receita-item">
+                    <template x-for="(item, index) in cardapio[dia]['Almoço']" :key="index">
+                      <li>
+                        <span x-text="item"></span>
+                        <button @click="removerReceita(dia, 'Almoço', index)" class="botao-excluir">❌</button>
+                      </li>
+                    </template>
+                  </ul>
+                </template>
+                <template x-if="cardapio[dia]['Almoço'].length === 0">
+                  <span></span>
+                </template>
+              </div>
+            </template>
+          </div>
 
-        <div class="linha-refeicao">
-          <div class="celula-label">Jantar</div>
-          <template x-for="dia in dias" :key="dia">
-            <div class="celula-item">
-              <template x-if="cardapio[dia]['Jantar'].length > 0">
-                <ul class="receita-item">
-                  <template x-for="(item, index) in cardapio[dia]['Jantar']" :key="index">
-                    <li x-text="item"></li>
-                  </template>
-                </ul>
-              </template>
-              <template x-if="cardapio[dia]['Jantar'].length === 0">
-                <span></span>
-              </template>
-            </div>
-          </template>
+          <div class="linha-refeicao">
+            <div class="celula-label">Jantar</div>
+            <template x-for="dia in dias" :key="dia">
+              <div class="celula-item">
+                <template x-if="cardapio[dia]['Jantar'].length > 0">
+                  <ul class="receita-item">
+                    <template x-for="(item, index) in cardapio[dia]['Jantar']" :key="index">
+                      <li>
+                        <span x-text="item"></span>
+                        <button @click="removerReceita(dia, 'Jantar', index)" class="botao-excluir">❌</button>
+                      </li>
+                    </template>
+                  </ul>
+                </template>
+                <template x-if="cardapio[dia]['Jantar'].length === 0">
+                  <span></span>
+                </template>
+              </div>
+            </template>
+          </div>
+
         </div>
       </div>
-    </div>
+
+
+
+  <!-- Modal para adicionar refeições -->
 
     <div class="modal" x-show="mostrarModal" x-cloak>
       <div class="modal-content">

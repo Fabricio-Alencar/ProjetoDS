@@ -61,9 +61,19 @@ function menuPlanner() {
         porcoes: '12 porções'
       }
     ],
+  
 
-    // Função para adicionar uma receita ao cardápio
-    adicionarReceita() {
+
+
+
+
+
+
+
+
+
+// Função para adicionar uma receita ao cardápio
+adicionarReceita() {
       this.novasReceitas.forEach(nome => {
         const limpa = nome.trim();
         if (limpa && !this.cardapio[this.novoDia][this.novaRefeicao].includes(limpa)) {
@@ -76,31 +86,42 @@ function menuPlanner() {
       this.mostrarModal = false;
     },
 
-    // Função para abrir o modal de adicionar receita
-    abrirModalAdicionar() {
+// Função para abrir o modal de adicionar receita
+abrirModalAdicionar() {
       this.mostrarModal = true;
     },
 
-    // Função para adicionar uma linha de receita no modal
-    adicionarLinhaReceita() {
+// Função para adicionar uma linha de receita no modal
+// Quando o usuario quer adicionar mais de uma receita por vez
+adicionarLinhaReceita() {
       this.novasReceitas.push('');
     },
 
-    // Função para remover uma linha de receita no modal
-    removerLinhaReceita(index) {
+// Função para remover uma linha de receita no modal
+// Se arrependeu da escolha de antes
+removerLinhaReceita(index) {
       this.novasReceitas.splice(index, 1);
     },
 
-    // Função para filtrar as receitas disponíveis no autocomplete
-    filtrarReceitas(index) {
+// Função para filtrar as receitas disponíveis no autocomplete
+filtrarReceitas(index) {
       const termo = this.novasReceitas[index].toLowerCase();
       return this.receitasUsuario.filter(r => {
         return r.titulo.toLowerCase().includes(termo) && !this.novasReceitas.includes(r.titulo);
       });
     },
 
-    // Função para gerar a lista de compras
-    gerarListaCompras() {
+
+
+// Remover a refeição do cardápio
+removerReceita(dia, refeicao, index) {
+      this.cardapio[dia][refeicao].splice(index, 1);
+    },
+    
+
+
+// Função para gerar a lista de compras
+gerarListaCompras() {
       const ingredientesTotais = {};
 
       // Itera sobre os dias e refeições, somando os ingredientes necessários
@@ -135,11 +156,11 @@ function menuPlanner() {
       return listaFinal;
     },
 
-    // Variáveis para controlar o modal da lista de compras
-    mostrarModalCompras: false,
-    listaDeCompras: [],
+// Variáveis para controlar o modal da lista de compras
+mostrarModalCompras: false,
+listaDeCompras: [],
 
-    // Função para abrir o modal de compras e gerar a lista
+// Função para abrir o modal de compras e gerar a lista
     abrirModalCompras() {
       this.listaDeCompras = this.gerarListaCompras();  // Gerar lista de compras ao abrir o modal
       this.mostrarModalCompras = true;

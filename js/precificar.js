@@ -107,7 +107,7 @@ function renderReceitas() {
             <span>${r.tipo.charAt(0).toUpperCase() + r.tipo.slice(1)}</span>
           </div>
           <div class="recipe-price">
-            <img class="price-icon" src="static/imagens/lixeira.png" alt="Ícone de preço">
+            <img class="price-icon" src="static/imagens/cifrao.png" alt="Ícone de preço">
             <span class="price-value">R$ ${r.preco || 'N/A'}</span>
           </div>
         </div>
