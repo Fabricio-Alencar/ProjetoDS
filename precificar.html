@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="static/css/css_geral/navigation.css">
   <link rel="stylesheet" href="static/css/css_precificar/recipes.css">
   <link rel="stylesheet" href="static/css/css_precificar/modal_precificacao.css">
+  <link rel="stylesheet" href="static/css/css_precificar/preco_final.css">
 </head>
 <body>
 
@@ -73,12 +74,13 @@
     <div class="modal-body">
       <div class="ingredient-table">
         <div class="ingredient-header">
-          <div class="ingredient-name">Ingrediente</div>
-          <div class="ingredient-price">Valor</div>
-          <div class="ingredient-quantity">Quantidade</div>
-          <div class="ingredient-name">Unidade de Medida</div>
-
+          <div>Ingrediente</div>
+          <div>Preço</div>
+          <div></div>
+          <div>Quantidade</div>
+          <div>Unidade de medida</div>
         </div>
+        
 
         <div id="ingredientesFormulario">
           <!-- Os ingredientes serão inseridos dinamicamente aqui -->
@@ -91,9 +93,13 @@
     </div>
   </div>
 </div>
-
-
  
+
+<!-- Exibe o preço final -->
+<div id="precoCaixa" class="preco-caixa" style="display: none;">
+  <img src="static/imagens/cifrao.png" alt="Ícone de cifrão" class="icone-cifrao">
+  <span id="mensagemPreco">Preço total da receita: R$ 0.00</span>
+</div>
 
   <footer>
     <div class="footer-content">
