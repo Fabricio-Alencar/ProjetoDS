@@ -232,11 +232,22 @@ function renderizarListaReceitas(receitasFiltradas) {
   });
 }
 
-// Função para enviar a receita selecionada
+// Envia a receita selecionada e mostra o modal de sucesso
 document.getElementById("enviarCompartilhar").addEventListener("click", () => {
   if (receitaSelecionada) {
-    alert(`Receita "${receitaSelecionada}" compartilhada com ${amigoSelecionado}!`);
-    fecharModalCompartilhar();  // Fecha o modal após o envio
+    
+    // Mostra o modal de sucesso
+    const modalSucesso = document.getElementById("modalSucessoCompartilhar");
+    modalSucesso.style.display = "flex";
+    document.getElementById("mensagemSucesso").textContent = `Receita "${receitaSelecionada}" compartilhada com ${amigoSelecionado}!`;
+
+    // Fecha o modal de compartilhamento
+    fecharModalCompartilhar();
+
+    // Esconde o modal de sucesso após 4 segundos
+    setTimeout(() => {
+      modalSucesso.style.display = "none";
+    }, 4000);
   }
 });
 
