@@ -1,44 +1,31 @@
-const usuario = "Ana";
+// Definição do nome do usuário que será mostrado na tela
+const usuario = "João";
 document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
 
-
+// Lista inicial de amigos com nome, email e foto
 const amigos = [
-  { nome: "Carlos", email: "carlos@email.com", foto: "https://via.placeholder.com/50" },
-  { nome: "Marina", email: "marina@email.com", foto: "https://via.placeholder.com/50" },
-  { nome: "João", email: "joao@email.com", foto: "https://via.placeholder.com/50" }
+  { nome: "Carlos", email: "carlos@email.com", foto: "static/imagens/placeholder.png" },
+  { nome: "Marina", email: "marina@email.com", foto: "static/imagens/placeholder.png" },
+  { nome: "João", email: "joao@email.com", foto: "static/imagens/placeholder.png" }
 ];
 
+// Lista de receitas para compartilhamento
 const receitas = ["Bolo de Cenoura", "Torta Salgada", "Panqueca", "Feijoada"];
 
-// Lista simulada de todos os usuários disponíveis para adicionar
+// Lista de todos os usuários disponíveis para pesquisa ao adicionar amigo
 const todosUsuarios = [
-  { nome: "Carlos", email: "carlos@email.com", foto: "https://via.placeholder.com/50" },
-  { nome: "Marina", email: "marina@email.com", foto: "https://via.placeholder.com/50" },
-  { nome: "João", email: "joao@email.com", foto: "https://via.placeholder.com/50" },
+  { nome: "Carlos", email: "carlos@email.com", foto: "static/imagens/placeholder.png" },
+  { nome: "Marina", email: "marina@email.com", foto: "static/imagens/placeholder.png" },
+  { nome: "João", email: "joao@email.com", foto: "static/imagens/placeholder.png" },
 ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let usuarioSelecionado = null;
+let usuarioSelecionado = null;  // Variável para armazenar o usuário selecionado para adicionar como amigo
 
 // Função para abrir o modal de adicionar amigo
 document.getElementById("botaoAdicionarAmigo").onclick = () => {
-  document.getElementById("modalAdicionarAmigo").classList.remove("hidden");
+  // Exibe o modal e limpa os campos
+  const modal = document.getElementById("modalAdicionarAmigo");
+  modal.classList.remove("hidden");
   document.getElementById("pesquisaUsuario").value = "";
   document.getElementById("resultadoPesquisa").innerHTML = "";
   document.getElementById("confirmarAdicionar").classList.add("hidden");
@@ -51,18 +38,21 @@ function fecharModal() {
   document.getElementById("modalAdicionarAmigo").classList.add("hidden");
 }
 
-// Função de pesquisa de amigos
+// Função para pesquisar amigos na lista de amigos
 document.getElementById("pesquisaAmigos").addEventListener("input", function () {
+  // Filtra os amigos com base no termo digitado
   const termo = this.value.toLowerCase();
   const resultados = amigos.filter(u => u.nome.toLowerCase().includes(termo));
   const container = document.getElementById("listaAmigos");
   container.innerHTML = "";
 
-  // Verifica se a lista está vazia
+  // Se não encontrar amigos, exibe mensagem
   if (resultados.length === 0) {
     container.innerHTML = "<div class='mensagem-vazia'>Nenhum amigo encontrado.</div>";
+    return;
   }
 
+  // Exibe os amigos encontrados
   resultados.forEach((amigo, index) => {
     const div = document.createElement("div");
     div.className = "amigo-box";
@@ -98,20 +88,42 @@ document.getElementById("pesquisaAmigos").addEventListener("input", function () 
   });
 });
 
-// Função para pesquisar usuários para adicionar
+// Função para pesquisar usuários ao adicionar amigo
 document.getElementById("pesquisaUsuario").addEventListener("input", function () {
   const termo = this.value.toLowerCase();
-  const resultados = todosUsuarios.filter(u => u.email.toLowerCase().includes(termo));
   const container = document.getElementById("resultadoPesquisa");
   container.innerHTML = "";
+  usuarioSelecionado = null;
+  document.getElementById("confirmarAdicionar").classList.add("hidden");
+  document.getElementById("confirmarAdicionar").disabled = true;
 
+  if (termo.length === 0) {
+    return; // Não faz nada se o campo estiver vazio
+  }
+
+  const resultados = todosUsuarios.filter(u => u.email.toLowerCase().includes(termo));
+
+  // Exibe os resultados da pesquisa de usuários
   resultados.forEach(usuario => {
     const item = document.createElement("div");
     item.className = "usuario-item";
+    item.tabIndex = 0; // Permite navegação por teclado
+    item.setAttribute('role', 'option');
     item.onclick = () => {
       usuarioSelecionado = usuario;
       document.getElementById("confirmarAdicionar").classList.remove("hidden");
       document.getElementById("confirmarAdicionar").disabled = false;
+
+      // Marca visualmente a seleção
+      Array.from(container.children).forEach(child => child.classList.remove('selecionado'));
+      item.classList.add('selecionado');
+    };
+
+    item.onkeypress = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        item.click();
+      }
     };
 
     const img = document.createElement("img");
@@ -130,50 +142,38 @@ document.getElementById("pesquisaUsuario").addEventListener("input", function ()
 // Função para adicionar amigo à lista
 document.getElementById("confirmarAdicionar").addEventListener("click", () => {
   if (usuarioSelecionado && !amigos.find(a => a.email === usuarioSelecionado.email)) {
-    amigos.push(usuarioSelecionado);
-    renderizarAmigos();
-    fecharModal();
+    amigos.push(usuarioSelecionado);  // Adiciona o usuário selecionado à lista de amigos
+    renderizarAmigos();  // Re-renderiza a lista de amigos
+    fecharModal();  // Fecha o modal
   } else {
     alert("Amigo já está na lista.");
   }
 });
 
+let indexParaExcluir = null;  // Variável para armazenar o índice do amigo a ser excluído
 
-
-
-
-
-
-
-
-
-let indexParaExcluir = null;
-
-// Função para excluir amigo
+// Função para excluir amigo da lista
 function excluirAmigo(index) {
   indexParaExcluir = index;
   document.getElementById("modalConfirmarExclusao").classList.remove("hidden");
 }
 
+// Função para fechar o modal de confirmação de exclusão
 function fecharModalConfirmacao() {
   document.getElementById("modalConfirmarExclusao").classList.add("hidden");
   indexParaExcluir = null;
 }
 
+// Confirma a exclusão do amigo
 document.getElementById("confirmarExclusao").addEventListener("click", () => {
   if (indexParaExcluir !== null) {
-    amigos.splice(indexParaExcluir, 1);
-    renderizarAmigos();
-    fecharModalConfirmacao();
+    amigos.splice(indexParaExcluir, 1);  // Remove o amigo da lista
+    renderizarAmigos();  // Re-renderiza a lista de amigos
+    fecharModalConfirmacao();  // Fecha o modal de confirmação
   }
 });
 
-
-
-
-
-
-// Função para compartilhar receita com o amigo
+// Função para compartilhar uma receita com um amigo
 function compartilharReceita(nome) {
   const receita = prompt(`Qual receita deseja compartilhar com ${nome}?\nOpções: ${receitas.join(", ")}`);
   if (receitas.includes(receita)) {
@@ -183,15 +183,7 @@ function compartilharReceita(nome) {
   }
 }
 
-
-
-
-
-
-
-
-
-// Função para renderizar amigos
+// Função para renderizar a lista de amigos
 function renderizarAmigos() {
   const container = document.getElementById("listaAmigos");
   container.innerHTML = "";
@@ -227,8 +219,6 @@ function renderizarAmigos() {
       <span class="tooltip-text">Compartilhar Receita</span>
     `;
     compartilhar.onclick = () => compartilharReceita(amigo.nome);
-
-
 
     acoes.appendChild(excluir);
     acoes.appendChild(compartilhar);

@@ -15,6 +15,12 @@
   <link rel="stylesheet" href="static/css/css_amigos/frase_e_botao.css">
   <link rel="stylesheet" href="static/css/css_amigos/modal_adicionar.css">
   <link rel="stylesheet" href="static/css/css_amigos/modal_exclusao.css">
+  <style>
+    /* Define a classe hidden para esconder os elementos */
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -36,7 +42,7 @@
         <a href="cardapio.html" class="option">Cardápio Semanal</a>
       </div>
       
-    <div>
+      <div>
         <!-- Barra de Pesquisa para Amigos -->
         <div id="barraPesquisaAmigos">
           <input type="text" id="pesquisaAmigos" placeholder="Buscar amigos...">
@@ -44,51 +50,43 @@
 
         <!-- Contêiner para a frase e o botão -->
         <div class="add-amigo-container">
-        <!-- Frase explicativa -->
-        <p class="frase-explicativa">Adicione amigos e compartilhe receitas!</p>
+          <!-- Frase explicativa -->
+          <p class="frase-explicativa">Adicione amigos e compartilhe receitas!</p>
 
-        <!-- Botão de adicionar amigo -->
-        <div class="icone_botao add" id="botaoAdicionarAmigo">
-          <img src="static/imagens/mais.png" alt="Adicionar Amigo">
-          <span class="caixa_de_texto_botao">Adicionar Amigo</span>
+          <!-- Botão de adicionar amigo -->
+          <div class="icone_botao add" id="botaoAdicionarAmigo" tabindex="0" role="button" aria-label="Adicionar Amigo">
+            <img src="static/imagens/mais.png" alt="Adicionar Amigo">
+            <span class="caixa_de_texto_botao">Adicionar Amigo</span>
+          </div>
         </div>
       </div>
-    </div>
 
-
-    <!-- Modal de Confirmação de exclusão-->
-    <div id="modalConfirmarExclusao" class="hidden">
-      <div class="modal-content">
-        <p>Tem certeza que deseja excluir este amigo?</p>
-        <div class="botoes-confirmacao">
-          <button id="confirmarExclusao">Sim</button>
-          <button onclick="fecharModalConfirmacao()">Cancelar</button>
+      <!-- Modal de Confirmação de exclusão -->
+      <div id="modalConfirmarExclusao" class="hidden" role="dialog" aria-modal="true" aria-labelledby="tituloModalExcluir">
+        <div class="modal-content">
+          <p id="tituloModalExcluir">Tem certeza que deseja excluir este amigo?</p>
+          <div class="botoes-confirmacao">
+            <button id="confirmarExclusao">Sim</button>
+            <button onclick="fecharModalConfirmacao()">Cancelar</button>
+          </div>
         </div>
       </div>
-    </div>
-
-
-
-    
-        <!-- Mostra os amigos do usuario -->
-        <div id="listaAmigos"></div>
+      
+      <!-- Mostra os amigos do usuario -->
+      <div id="listaAmigos"></div>
     </div>
   </div>
 
-
-<!-- Modal para adicionar amigo -->
-<div id="modalAdicionarAmigo" class="modal hidden" onclick="fecharModal()">
-  <div class="modal-conteudo" onclick="event.stopPropagation()">
-    <input type="text" id="pesquisaUsuario" placeholder="Pesquise pelo email..." />
-    <div id="resultadoPesquisa" class="resultado-pesquisa"></div>
-    <button id="confirmarAdicionar" class="hidden">Adicionar Amigo</button>
-    <button onclick="fecharModal()">Fechar</button>
+  <!-- Modal para adicionar amigo -->
+  <div id="modalAdicionarAmigo" class="modal-adicionar hidden" onclick="fecharModal()" role="dialog" aria-modal="true" aria-labelledby="tituloModalAdicionar">
+    <div class="modal-conteudo" onclick="event.stopPropagation()">
+      <h2 id="tituloModalAdicionar">Adicionar Amigo</h2>
+      <input type="text" id="pesquisaUsuario" placeholder="Pesquise pelo email..." aria-label="Pesquisar usuário pelo email" />
+      <div id="resultadoPesquisa" class="resultado-pesquisa" role="listbox" aria-live="polite"></div>
+      <button id="confirmarAdicionar" class="hidden" disabled>Adicionar Amigo</button>
+      <button onclick="fecharModal()">Fechar</button>
+    </div>
   </div>
-</div>
-
-
-
-    
 
   <footer>
     <div class="footer-content">
@@ -100,3 +98,4 @@
 
 </body>
 </html>
+
