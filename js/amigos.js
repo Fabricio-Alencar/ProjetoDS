@@ -23,7 +23,6 @@ let usuarioSelecionado = null;  // Variável para armazenar o usuário seleciona
 
 // Função para abrir o modal de adicionar amigo
 document.getElementById("botaoAdicionarAmigo").onclick = () => {
-  // Exibe o modal e limpa os campos
   const modal = document.getElementById("modalAdicionarAmigo");
   modal.classList.remove("hidden");
   document.getElementById("pesquisaUsuario").value = "";
@@ -40,19 +39,16 @@ function fecharModal() {
 
 // Função para pesquisar amigos na lista de amigos
 document.getElementById("pesquisaAmigos").addEventListener("input", function () {
-  // Filtra os amigos com base no termo digitado
   const termo = this.value.toLowerCase();
   const resultados = amigos.filter(u => u.nome.toLowerCase().includes(termo));
   const container = document.getElementById("listaAmigos");
   container.innerHTML = "";
 
-  // Se não encontrar amigos, exibe mensagem
   if (resultados.length === 0) {
     container.innerHTML = "<div class='mensagem-vazia'>Nenhum amigo encontrado.</div>";
     return;
   }
 
-  // Exibe os amigos encontrados
   resultados.forEach((amigo, index) => {
     const div = document.createElement("div");
     div.className = "amigo-box";
@@ -97,24 +93,21 @@ document.getElementById("pesquisaUsuario").addEventListener("input", function ()
   document.getElementById("confirmarAdicionar").classList.add("hidden");
   document.getElementById("confirmarAdicionar").disabled = true;
 
-  if (termo.length === 0) {
-    return; // Não faz nada se o campo estiver vazio
-  }
+  if (termo.length === 0) return;
 
   const resultados = todosUsuarios.filter(u => u.email.toLowerCase().includes(termo));
 
-  // Exibe os resultados da pesquisa de usuários
   resultados.forEach(usuario => {
     const item = document.createElement("div");
-    item.className = "usuario-item";
-    item.tabIndex = 0; // Permite navegação por teclado
-    item.setAttribute('role', 'option');
+    item.className = "usuario-item cartao-amigo";
+    item.setAttribute("role", "option");
+    item.tabIndex = 0;
+
     item.onclick = () => {
       usuarioSelecionado = usuario;
       document.getElementById("confirmarAdicionar").classList.remove("hidden");
       document.getElementById("confirmarAdicionar").disabled = false;
 
-      // Marca visualmente a seleção
       Array.from(container.children).forEach(child => child.classList.remove('selecionado'));
       item.classList.add('selecionado');
     };
@@ -128,10 +121,15 @@ document.getElementById("pesquisaUsuario").addEventListener("input", function ()
 
     const img = document.createElement("img");
     img.src = usuario.foto;
+    img.alt = `Foto de ${usuario.nome}`;
+    img.className = "foto-perfil";
 
     const info = document.createElement("div");
-    info.className = "usuario-info";
-    info.innerHTML = `<strong>${usuario.nome}</strong><span>${usuario.email}</span>`;
+    info.className = "info-amigo";
+    info.innerHTML = `
+      <div class="nome-amigo">${usuario.nome}</div>
+      <div class="email-amigo">${usuario.email}</div>
+    `;
 
     item.appendChild(img);
     item.appendChild(info);
@@ -142,15 +140,15 @@ document.getElementById("pesquisaUsuario").addEventListener("input", function ()
 // Função para adicionar amigo à lista
 document.getElementById("confirmarAdicionar").addEventListener("click", () => {
   if (usuarioSelecionado && !amigos.find(a => a.email === usuarioSelecionado.email)) {
-    amigos.push(usuarioSelecionado);  // Adiciona o usuário selecionado à lista de amigos
-    renderizarAmigos();  // Re-renderiza a lista de amigos
-    fecharModal();  // Fecha o modal
+    amigos.push(usuarioSelecionado);
+    renderizarAmigos();
+    fecharModal();
   } else {
     alert("Amigo já está na lista.");
   }
 });
 
-let indexParaExcluir = null;  // Variável para armazenar o índice do amigo a ser excluído
+let indexParaExcluir = null;
 
 // Função para excluir amigo da lista
 function excluirAmigo(index) {
@@ -167,13 +165,13 @@ function fecharModalConfirmacao() {
 // Confirma a exclusão do amigo
 document.getElementById("confirmarExclusao").addEventListener("click", () => {
   if (indexParaExcluir !== null) {
-    amigos.splice(indexParaExcluir, 1);  // Remove o amigo da lista
-    renderizarAmigos();  // Re-renderiza a lista de amigos
-    fecharModalConfirmacao();  // Fecha o modal de confirmação
+    amigos.splice(indexParaExcluir, 1);
+    renderizarAmigos();
+    fecharModalConfirmacao();
   }
 });
 
-// Função para compartilhar uma receita com um amigo
+// Compartilhar receita com um amigo
 function compartilharReceita(nome) {
   const receita = prompt(`Qual receita deseja compartilhar com ${nome}?\nOpções: ${receitas.join(", ")}`);
   if (receitas.includes(receita)) {
@@ -183,7 +181,7 @@ function compartilharReceita(nome) {
   }
 }
 
-// Função para renderizar a lista de amigos
+// Renderiza a lista de amigos
 function renderizarAmigos() {
   const container = document.getElementById("listaAmigos");
   container.innerHTML = "";
@@ -230,5 +228,5 @@ function renderizarAmigos() {
   });
 }
 
-// Renderiza inicialmente todos os amigos
+// Renderiza os amigos ao iniciar
 renderizarAmigos();

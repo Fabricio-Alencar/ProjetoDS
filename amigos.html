@@ -77,16 +77,21 @@
     </div>
   </div>
 
-  <!-- Modal para adicionar amigo -->
-  <div id="modalAdicionarAmigo" class="modal-adicionar hidden" onclick="fecharModal()" role="dialog" aria-modal="true" aria-labelledby="tituloModalAdicionar">
-    <div class="modal-conteudo" onclick="event.stopPropagation()">
-      <h2 id="tituloModalAdicionar">Adicionar Amigo</h2>
-      <input type="text" id="pesquisaUsuario" placeholder="Pesquise pelo email..." aria-label="Pesquisar usuário pelo email" />
-      <div id="resultadoPesquisa" class="resultado-pesquisa" role="listbox" aria-live="polite"></div>
-      <button id="confirmarAdicionar" class="hidden" disabled>Adicionar Amigo</button>
-      <button onclick="fecharModal()">Fechar</button>
-    </div>
+<!-- Modal para adicionar amigo -->
+<div id="modalAdicionarAmigo" class="modal-adicionar hidden" onclick="fecharModal()" role="dialog" aria-modal="true" aria-labelledby="tituloModalAdicionar">
+  <div class="modal-conteudo" onclick="event.stopPropagation()">
+    <h2 id="tituloModalAdicionar" class="titulo-modal">Adicionar Amigo</h2>
+
+    <label for="pesquisaUsuario" class="label-email">Digite o email:</label>
+    <input type="text" id="pesquisaUsuario" placeholder="Pesquise pelo email..." aria-label="Pesquisar usuário pelo email" />
+
+    <div id="resultadoPesquisa" class="resultado-pesquisa" role="listbox" aria-live="polite"></div>
+
+    <button id="confirmarAdicionar" class="hidden" disabled>Adicionar Amigo</button>
+    <button onclick="fecharModal()">Fechar</button>
   </div>
+</div>
+
 
   <footer>
     <div class="footer-content">
@@ -98,4 +103,3 @@
 
 </body>
 </html>
-

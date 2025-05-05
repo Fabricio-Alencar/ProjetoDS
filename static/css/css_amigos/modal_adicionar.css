@@ -85,3 +85,81 @@ button:hover {
 #confirmarAdicionar.hidden {
   display: none;
 }
+
+
+.hidden {
+  display: none;
+}
+
+
+/* Título do modal com fonte maior */
+.titulo-modal {
+  font-size: 1.6rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Label do campo de email */
+.label-email {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+/* Estilo dos cartões de sugestão de amigos */
+.usuario-item.cartao-amigo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.usuario-item.cartao-amigo:hover {
+  background-color: #f0f0f0;
+}
+
+.usuario-item.cartao-amigo.selecionado {
+  background-color: #d6f5d6;
+  border-color: #4caf50;
+}
+
+/* Foto de perfil arredondada */
+.usuario-item.cartao-amigo img.foto-perfil {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+}
+
+/* Informações do amigo */
+.usuario-item.cartao-amigo .info-amigo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 0.95rem;
+}
+
+.usuario-item.cartao-amigo .info-amigo .nome-amigo {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.usuario-item.cartao-amigo .info-amigo .email-amigo {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+
+
+
+
+
+
