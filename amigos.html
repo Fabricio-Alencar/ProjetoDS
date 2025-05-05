@@ -10,8 +10,11 @@
   <link rel="stylesheet" href="static/css/css_geral/header_and_footer.css">
   <link rel="stylesheet" href="static/css/css_geral/container.css">
   <link rel="stylesheet" href="static/css/css_geral/navigation.css">
-  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
-  <link rel="stylesheet" href="static/css/css_amigos/amigos.css">  <link rel="stylesheet" href="static/css/css_geral/add_and_delete.css">
+  <link rel="stylesheet" href="static/css/css_geral/botoes.css">
+  <link rel="stylesheet" href="static/css/css_amigos/amigos.css">
+  <link rel="stylesheet" href="static/css/css_amigos/frase_e_botao.css">
+  <link rel="stylesheet" href="static/css/css_amigos/modal_adicionar.css">
+  <link rel="stylesheet" href="static/css/css_amigos/modal_exclusao.css">
 </head>
 <body>
 
@@ -24,9 +27,6 @@
     </div>
   </header>
   
-  
-
-
   <div class="container">
     <div class="section">
       <div class="nav-options">
@@ -35,12 +35,60 @@
         <span class="option active">Amigos</span>
         <a href="cardapio.html" class="option">Cardápio Semanal</a>
       </div>
+      
+    <div>
+        <!-- Barra de Pesquisa para Amigos -->
+        <div id="barraPesquisaAmigos">
+          <input type="text" id="pesquisaAmigos" placeholder="Buscar amigos...">
+        </div>
 
-      <!-- 🔽 Adicionando funcionalidade de amigos -->
-      <button class="add-amigo-btn" onclick="adicionarAmigo()">+</button>
-      <div id="listaAmigos" class="amigos-lista"></div>
+        <!-- Contêiner para a frase e o botão -->
+        <div class="add-amigo-container">
+        <!-- Frase explicativa -->
+        <p class="frase-explicativa">Adicione amigos e compartilhe receitas!</p>
+
+        <!-- Botão de adicionar amigo -->
+        <div class="icone_botao add" id="botaoAdicionarAmigo">
+          <img src="static/imagens/mais.png" alt="Adicionar Amigo">
+          <span class="caixa_de_texto_botao">Adicionar Amigo</span>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal de Confirmação de exclusão-->
+    <div id="modalConfirmarExclusao" class="hidden">
+      <div class="modal-content">
+        <p>Tem certeza que deseja excluir este amigo?</p>
+        <div class="botoes-confirmacao">
+          <button id="confirmarExclusao">Sim</button>
+          <button onclick="fecharModalConfirmacao()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+        <!-- Mostra os amigos do usuario -->
+        <div id="listaAmigos"></div>
     </div>
   </div>
+
+
+<!-- Modal para adicionar amigo -->
+<div id="modalAdicionarAmigo" class="modal hidden" onclick="fecharModal()">
+  <div class="modal-conteudo" onclick="event.stopPropagation()">
+    <input type="text" id="pesquisaUsuario" placeholder="Pesquise pelo email..." />
+    <div id="resultadoPesquisa" class="resultado-pesquisa"></div>
+    <button id="confirmarAdicionar" class="hidden">Adicionar Amigo</button>
+    <button onclick="fecharModal()">Fechar</button>
+  </div>
+</div>
+
+
+
+    
 
   <footer>
     <div class="footer-content">
@@ -49,4 +97,6 @@
   </footer>
 
 <script src="js/amigos.js"></script>
-  
+
+</body>
+</html>

@@ -1,37 +1,126 @@
 .amigos-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  /* Aumentamos o gap entre os itens */
+  margin-top: 20px;
+}
 
 .amigo-box {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    background: #f9f9f9;
-  }
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 23px;
+  background: #f9f9f9;
+  margin-bottom: 10px;  /* Adicionando espaçamento inferior entre os amigos */
+}
 
 .amigo-foto {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ddd;
-    background-image: url('https://via.placeholder.com/50');
-    background-size: cover;
-    background-position: center;
-    margin-right: 10px;
-  }
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ddd;
+  background-image: url('https://via.placeholder.com/50');
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
 
 .amigo-nome {
-    flex: 1;
-    font-weight: bold;
-    font-size: 20px;
+  flex: 1;
+  font-weight: bold;
+  font-size: 25px;
+}
 
-  }
 
+#listaAmigos {
+  margin-top: 30px;  /* Aumentamos o valor para afastar mais os amigos do topo */
+  margin-bottom: 30px;  /* Opcional: Afastar o fundo também */
+}
+
+
+
+
+
+
+/* Contêiner dos botões */
+.amigo-acoes {
+  display: flex; /* Alinha os botões lado a lado */
+  gap: 10px; /* Espaço entre os botões */
+}
+
+/* Personalização dos botões de Excluir e Compartilhar */
 .amigo-acoes button {
-    margin-left: 5px;
-  }
+  padding: 0; /* Remove o preenchimento */
+  font-size: 14px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex; /* Usar flexbox para alinhamento */
+  align-items: center; /* Alinhamento vertical */
+  justify-content: center; /* Alinhamento horizontal */
+  transition: all 0.3s ease;
+  width: 50px; /* Define o tamanho do botão */
+  height: 50px; /* Define o tamanho do botão */
+}
+
+/* Tamanho da imagem do ícone */
+.icone-botao {
+  width: 100%;  /* A imagem preenche o botão */
+  height: 100%; /* A imagem preenche o botão */
+  object-fit: cover; /* Garante que a imagem preencha o botão sem distorção */
+}
+
+/* Botão de Excluir */
+.amigo-acoes button:nth-child(1) {
+    background-color: #df8680; /* Vermelho para excluir */
+    border-radius: 10px;
+}
+
+.amigo-acoes button:nth-child(1):hover {
+  background-color: #d65749; /* Cor de fundo escura ao passar o mouse */
+}
+
+/* Botão de Compartilhar */
+.amigo-acoes button:nth-child(2) {
+  background-color: #3498db; /* Cor de fundo azul */
+  color: white;
+}
+
+.amigo-acoes button:nth-child(2):hover {
+  background-color: #2980b9; /* Cor de fundo escura ao passar o mouse */
+}
+
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  font-family: 'Handlee', cursive, sans-serif;
+  background-color: #333;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 7px 10px;
+  position: absolute;
+  left: 80%;
+  transform: translateX(-50%);
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  z-index: 10;
+  z-index: 1;            /* A tooltip ficará acima do botão */
+  bottom: -35px;         /* A tooltip ficará 35px abaixo do botão */
+  left: 50%;             /* A tooltip será centralizada horizontalmente em relação ao botão */
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

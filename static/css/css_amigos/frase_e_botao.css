@@ -1,0 +1,37 @@
+/* Contêiner da frase e do botão */
+.add-amigo-container {
+  display: inline-flex; /* Coloca os elementos lado a lado */
+  align-items: center; /* Alinha verticalmente os itens */
+  gap: 20px; /* Espaçamento entre a frase e o botão */
+  margin-left: 20px; /* Espaço à esquerda entre a barra de pesquisa e o conteúdo */
+}
+  
+.frase-explicativa {
+    margin:5 0;
+    font-size: 1.5rem;
+}
+
+/* Contêiner principal para os elementos */
+#barraPesquisaAmigos {
+  display: inline-flex; /* Usa o Flexbox para colocar os itens lado a lado */
+  align-items: center; /* Alinha o conteúdo verticalmente */
+  gap: 10px; /* Espaçamento entre os itens */
+  margin-bottom: 10px; /* Espaço abaixo da barra de pesquisa */
+}
+  
+/* Barra de pesquisa */
+#pesquisaAmigos {
+  width: 300px; /* Largura da barra de pesquisa */
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+  
+  .mensagem-vazia {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 20px;
+  }
+  

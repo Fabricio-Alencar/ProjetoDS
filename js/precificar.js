@@ -84,8 +84,8 @@ function renderReceitas() {
     recipesList.appendChild(card);
   });
 }
-
 let receitaAtual = null;
+
 
 function abrirModalPrecificar(receita) {
   receitaAtual = receita;
