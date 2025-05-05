@@ -174,15 +174,90 @@ document.getElementById("confirmarExclusao").addEventListener("click", () => {
   }
 });
 
-// Compartilhar receita com um amigo
+
+
+
+
+
+
+
+
+
+
+let receitaSelecionada = null;  // Variável para armazenar a receita selecionada
+
+// Função para abrir o modal de compartilhamento
 function compartilharReceita(nome) {
-  const receita = prompt(`Qual receita deseja compartilhar com ${nome}?\nOpções: ${receitas.join(", ")}`);
-  if (receitas.includes(receita)) {
-    alert(`Receita "${receita}" compartilhada com ${nome}!`);
-  } else {
-    alert("Receita inválida ou não encontrada.");
-  }
+  amigoSelecionado = nome;
+  document.getElementById("modalCompartilhar").classList.remove("hidden");
+  document.getElementById("pesquisaReceita").value = "";
+  renderizarListaReceitas(receitas); // Mostra todas as receitas inicialmente
+  document.getElementById("enviarCompartilhar").classList.add("hidden");
+  document.getElementById("enviarCompartilhar").disabled = true;
 }
+
+// Fecha o modal
+function fecharModalCompartilhar() {
+  document.getElementById("modalCompartilhar").classList.add("hidden");
+  amigoSelecionado = null;
+  receitaSelecionada = null;  // Reseta a receita selecionada
+  document.getElementById("enviarCompartilhar").classList.add("hidden");
+  document.getElementById("enviarCompartilhar").disabled = true;
+}
+
+// Renderiza as receitas no modal
+function renderizarListaReceitas(receitasFiltradas) {
+  const container = document.getElementById("listaReceitasCompartilhar");
+  container.innerHTML = "";
+
+  if (receitasFiltradas.length === 0) {
+    container.innerHTML = "<div>Nenhuma receita encontrada.</div>";
+    return;
+  }
+
+  receitasFiltradas.forEach(receita => {
+    const div = document.createElement("div");
+    div.className = "receita-item";
+    div.textContent = receita;
+    div.onclick = () => {
+      receitaSelecionada = receita;  // Armazena a receita selecionada
+      document.getElementById("enviarCompartilhar").classList.remove("hidden");
+      document.getElementById("enviarCompartilhar").disabled = false;
+
+      // Adiciona um destaque visual à receita selecionada
+      Array.from(container.children).forEach(child => child.classList.remove('selecionado'));
+      div.classList.add('selecionado');
+    };
+    container.appendChild(div);
+  });
+}
+
+// Função para enviar a receita selecionada
+document.getElementById("enviarCompartilhar").addEventListener("click", () => {
+  if (receitaSelecionada) {
+    alert(`Receita "${receitaSelecionada}" compartilhada com ${amigoSelecionado}!`);
+    fecharModalCompartilhar();  // Fecha o modal após o envio
+  }
+});
+
+// Filtra receitas conforme digita
+document.getElementById("pesquisaReceita").addEventListener("input", function () {
+  const termo = this.value.toLowerCase();
+  const filtradas = receitas.filter(r => r.toLowerCase().includes(termo));
+  renderizarListaReceitas(filtradas);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Renderiza a lista de amigos
 function renderizarAmigos() {

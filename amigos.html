@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="static/css/css_amigos/frase_e_botao.css">
   <link rel="stylesheet" href="static/css/css_amigos/modal_adicionar.css">
   <link rel="stylesheet" href="static/css/css_amigos/modal_exclusao.css">
+  <link rel="stylesheet" href="static/css/css_amigos/modal_compartilhar.css">
   <style>
     /* Define a classe hidden para esconder os elementos */
     .hidden {
@@ -91,6 +92,24 @@
     <button onclick="fecharModal()">Fechar</button>
   </div>
 </div>
+
+
+<!-- Modal de Compartilhar Receita -->
+<div id="modalCompartilhar" class="modal-adicionar hidden" onclick="fecharModalCompartilhar()" role="dialog" aria-modal="true" aria-labelledby="tituloModalCompartilhar">
+  <div class="modal-conteudo" onclick="event.stopPropagation()">
+    <h2 id="tituloModalCompartilhar">Compartilhar Receita</h2>
+    
+    <label for="pesquisaReceita">Buscar Receita:</label>
+    <input type="text" id="pesquisaReceita" placeholder="Digite o nome da receita..." />
+
+    <div id="listaReceitasCompartilhar" class="lista-receitas"></div>
+
+    <!-- Botão de enviar, inicialmente oculto -->
+    <button id="enviarCompartilhar" class="hidden" disabled>Enviar</button>
+    <button onclick="fecharModalCompartilhar()">Fechar</button>
+  </div>
+</div>
+
 
 
   <footer>

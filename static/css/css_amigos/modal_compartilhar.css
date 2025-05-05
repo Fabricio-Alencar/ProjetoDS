@@ -1,0 +1,50 @@
+.lista-receitas {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lista-receitas .receita-item {
+    padding: 8px 12px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .lista-receitas .receita-item:hover {
+    background-color: #e0e0e0;
+  }
+
+  #tituloModalCompartilhar {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+
+  .lista-receitas .receita-item.selecionado {
+    background-color: #d3f8e2;  /* Cor de fundo verde suave para a receita selecionada */
+    border: 2px solid #4caf50;  /* Borda verde */
+  }
+
+
+  #enviarCompartilhar {
+    background-color: #007bff;  /* Cor de fundo azul */
+    color: white;  /* Texto branco */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  #enviarCompartilhar:hover {
+    background-color: #0056b3;  /* Cor azul mais escura ao passar o mouse */
+  }
+  
+  
