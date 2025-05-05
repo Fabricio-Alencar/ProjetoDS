@@ -4,19 +4,22 @@ document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
 
 // Lista inicial de amigos com nome, email e foto
 const amigos = [
-  { nome: "Carlos", email: "carlos@email.com", foto: "static/imagens/placeholder.png" },
-  { nome: "Marina", email: "marina@email.com", foto: "static/imagens/placeholder.png" },
-  { nome: "João", email: "joao@email.com", foto: "static/imagens/placeholder.png" }
+  { nome: "Carlos", email: "carlos@email.com", foto: "/static/imagens/prancheta.png" },
+  { nome: "Marina", email: "marina@email.com", foto: "/static/imagens/lixeira.png" },
+  { nome: "João", email: "joao@email.com", foto: "/static/imagens/coxa_frango.png" }
 ];
 
 // Lista de receitas para compartilhamento
 const receitas = ["Bolo de Cenoura", "Torta Salgada", "Panqueca", "Feijoada"];
 
 // Lista de todos os usuários disponíveis para pesquisa ao adicionar amigo
-const todosUsuarios = [
-  { nome: "Carlos", email: "carlos@email.com", foto: "static/imagens/placeholder.png" },
-  { nome: "Marina", email: "marina@email.com", foto: "static/imagens/placeholder.png" },
-  { nome: "João", email: "joao@email.com", foto: "static/imagens/placeholder.png" },
+const todosUsuarios = [  
+  { nome: "Carlos", email: "carlos@email.com", foto: "/static/imagens/prancheta.png" },
+  { nome: "Marina", email: "marina@email.com", foto: "/static/imagens/lixeira.png" },
+  { nome: "João", email: "joao@email.com", foto: "/static/imagens/coxa_frango.png" },
+  { nome: "Fabricio", email: "fabricio@email.com", foto: "/static/imagens/cifrao.png" },
+  { nome: "Ana", email: "ana@email.com", foto: "/static/imagens/mais.png" },
+
 ];
 
 let usuarioSelecionado = null;  // Variável para armazenar o usuário selecionado para adicionar como amigo
