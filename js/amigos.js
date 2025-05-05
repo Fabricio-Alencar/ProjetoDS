@@ -235,7 +235,7 @@ function renderizarListaReceitas(receitasFiltradas) {
 // Envia a receita selecionada e mostra o modal de sucesso
 document.getElementById("enviarCompartilhar").addEventListener("click", () => {
   if (receitaSelecionada) {
-    
+
     // Mostra o modal de sucesso
     const modalSucesso = document.getElementById("modalSucessoCompartilhar");
     modalSucesso.style.display = "flex";
@@ -302,7 +302,7 @@ function renderizarAmigos() {
     const compartilhar = document.createElement("button");
     compartilhar.classList.add("tooltip");
     compartilhar.innerHTML = `
-      <img src="static/imagens/compartilhar-icon.png" alt="Compartilhar" class="icone-botao">
+      <img src="static/imagens/aviao.png" alt="Compartilhar" class="icone-botao">
       <span class="tooltip-text">Compartilhar Receita</span>
     `;
     compartilhar.onclick = () => compartilharReceita(amigo.nome);

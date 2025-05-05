@@ -91,11 +91,11 @@
 /* Botão de Compartilhar */
 .amigo-acoes button:nth-child(2) {
   background-color: #3498db; /* Cor de fundo azul */
-  color: white;
+  border-radius: 10px;
 }
 
 .amigo-acoes button:nth-child(2):hover {
-  background-color: #2980b9; /* Cor de fundo escura ao passar o mouse */
+  background-color: #267ab3; /* Cor de fundo escura ao passar o mouse */
 }
 
 
