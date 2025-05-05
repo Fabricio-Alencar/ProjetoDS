@@ -55,33 +55,17 @@ const modalPrepTime = document.getElementById('modalPrepTime');
 const modalPortions = document.getElementById('modalPortions');
 const addRecipeBtn = document.getElementById('addRecipeBtn');
 const deleteRecipeBtn = document.getElementById('deleteRecipeBtn');
+const addRecipeModal = document.getElementById('addRecipeModal');
+const closeAddModal = document.getElementById('closeAddModal');
+const addRecipeForm = document.getElementById('addRecipeForm');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Alerta o usuário que a funcionalidade de adicionar ainda não está pronta
 addRecipeBtn.addEventListener('click', () => {
-  alert('Funcionalidade de adicionar receita ainda não implementada.');
-});
-
-// Alerta o usuário que a funcionalidade de excluir ainda não está pronta
-deleteRecipeBtn.addEventListener('click', () => {
   alert('Funcionalidade de excluir receita ainda não implementada.');
 });
+
+
 
 // Função que filtra e renderiza as receitas na tela
 function renderReceitas() {
@@ -160,6 +144,123 @@ window.addEventListener('click', (event) => {
     recipeModal.style.display = 'none';
   }
 });
+
+// Fechar modal
+function fecharModalExcluir() {
+  document.getElementById("modalExcluir").classList.add("hidden");
+  document.getElementById("confirmarExclusao").classList.add("hidden");
+  document.getElementById("confirmarExclusao").disabled = true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Abre o modal de exclusão e inicializa a lista
+function abrirModalExcluir() {
+  document.getElementById("modalExcluir").classList.remove("hidden");
+  document.getElementById("pesquisaExcluir").value = "";
+  atualizarListaExcluir();
+}
+
+// Fecha o modal de exclusão
+function fecharModalExcluir() {
+  document.getElementById("modalExcluir").classList.add("hidden");
+  document.getElementById("confirmarExclusao").classList.add("hidden");
+  document.getElementById("confirmarExclusao").disabled = true;
+}
+
+// Atualiza a lista de receitas para excluir
+function atualizarListaExcluir() {
+  const termo = document.getElementById("pesquisaExcluir").value.toLowerCase();
+  const lista = document.getElementById("listaReceitasExcluir");
+  lista.innerHTML = "";
+
+  const filtradas = receitas.filter(r => r.titulo.toLowerCase().includes(termo));
+
+  filtradas.forEach((r, index) => {
+    const item = document.createElement("div");
+    item.className = "item-receita";
+    item.textContent = r.titulo;
+    item.dataset.index = index;
+
+    item.addEventListener("click", () => {
+      // Limpa seleção anterior
+      document.querySelectorAll('.item-receita').forEach(el => el.classList.remove("selecionado"));
+      // Marca o item selecionado
+      item.classList.add("selecionado");
+
+      const btn = document.getElementById("confirmarExclusao");
+      btn.dataset.index = index;
+      btn.classList.remove("hidden");
+      btn.disabled = false;
+    });
+
+    lista.appendChild(item);
+  });
+
+  // Oculta o botão se nenhuma receita for clicada
+  const btn = document.getElementById("confirmarExclusao");
+  btn.classList.add("hidden");
+  btn.disabled = true;
+}
+
+// Monitora o input de busca
+document.getElementById('pesquisaExcluir').addEventListener('input', atualizarListaExcluir);
+
+// Confirma a exclusão da receita selecionada
+document.getElementById("confirmarExclusao").addEventListener("click", () => {
+  const index = parseInt(document.getElementById("confirmarExclusao").dataset.index);
+  if (!isNaN(index)) {
+    receitas.splice(index, 1);           // Remove a receita da lista
+    renderReceitas();                    // Atualiza a lista exibida
+    fecharModalExcluir();                // Fecha o modal de exclusão
+
+    const modalSucesso = document.getElementById("modalSucessoExcluir");
+    modalSucesso.style.display = "flex"; // Mostra o aviso de sucesso
+
+    setTimeout(() => {
+      modalSucesso.style.display = "none";
+    }, 2000); // Esconde o aviso após 2 segundos
+  }
+});
+
+// Botão de abrir modal
+document.getElementById("deleteRecipeBtn").addEventListener("click", abrirModalExcluir);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Atualiza as receitas ao digitar na busca
 searchInput.addEventListener('input', renderReceitas);
