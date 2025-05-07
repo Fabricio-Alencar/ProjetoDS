@@ -14,7 +14,6 @@ const receitas = [
       'Despeje a massa em uma forma untada.',
       'Asse a 180°C por 30 minutos.'
     ],
-    utensilios: ['Forma de bolo', 'Liquidificador'],
     tempoPreparo: '40 minutos',
     porcoes: '10 porções'
   },
@@ -29,7 +28,6 @@ const receitas = [
       'Misture os ingredientes e deixe a massa descansar por 1 hora.',
       'Modele e asse a 180°C por 45 minutos.'
     ],
-    utensilios: ['Forma de pão', 'Panela'],
     tempoPreparo: '1 hora e 30 minutos',
     porcoes: '12 porções'
   }
@@ -61,9 +59,6 @@ const addRecipeForm = document.getElementById('addRecipeForm');
 
 
 
-addRecipeBtn.addEventListener('click', () => {
-  alert('Funcionalidade de excluir receita ainda não implementada.');
-});
 
 
 
@@ -112,13 +107,6 @@ function renderReceitas() {
         modalIngredients.appendChild(li);
       });
 
-      modalUtensils.innerHTML = '';
-      r.utensilios.forEach(u => {
-        const li = document.createElement('li');
-        li.textContent = u;
-        modalUtensils.appendChild(li);
-      });
-
       modalPreparation.innerHTML = '';
       r.modoPreparo.forEach(p => {
         const li = document.createElement('li');
@@ -144,18 +132,6 @@ window.addEventListener('click', (event) => {
     recipeModal.style.display = 'none';
   }
 });
-
-// Fechar modal
-function fecharModalExcluir() {
-  document.getElementById("modalExcluir").classList.add("hidden");
-  document.getElementById("confirmarExclusao").classList.add("hidden");
-  document.getElementById("confirmarExclusao").disabled = true;
-}
-
-
-
-
-
 
 
 
@@ -244,18 +220,157 @@ document.getElementById("deleteRecipeBtn").addEventListener("click", abrirModalE
 
 
 
+const modal = document.getElementById("modalAdicionar");
+const abrirBtn = document.getElementById("abrirModalBtn"); // Botão para abrir o modal
+const fecharBtn = document.getElementById("fecharModalBtn"); // Botão para fechar o modal
+const form = document.getElementById("formReceita");
+
+const ingredientesContainer = document.getElementById("ingredientesContainer");
+const addIngredienteBtn = document.getElementById("addIngredienteBtn");
+
+const modoContainer = document.getElementById("modoContainer");
+const addPassoBtn = document.getElementById("addPassoBtn");
+
+const unidades = [
+  "g", "kg", "ml", "l", "colher", "colher de sopa", "colher de chá",
+  "xícara", "unidade", "pitada"
+];
+
+// 🧩 Função para adicionar um ingrediente (quantidade, produto, unidade)
+function adicionarIngrediente() {
+  const div = document.createElement("div");
+  div.className = "ingrediente-item";
+  div.innerHTML = `
+  <div class="input-container">
+    <input type="text" placeholder="Produto" class="input-ingrediente produto" required>
+    <input type="text" placeholder="Quantidade" class="input-ingrediente quantidade" required>
+    <select class="input-ingrediente unidade" required>
+      ${unidades.map(u => `<option value="${u}">${u}</option>`).join('')}
+    </select>
+    <button type="button" class="botao-acao botao-lixeira" onclick="removerIngrediente(this)">
+      <span class="x-vermelho">❌</span>
+    </button>
+  </div>  
+`;
 
 
+  ingredientesContainer.appendChild(div);
+}
 
+// Função para remover ingrediente
+function removerIngrediente(button) {
+  const div = button.closest(".ingrediente-item");
+  div.remove();
+}
 
+// 🧩 Função para adicionar um passo no modo de preparo
+function adicionarPasso() {
+  const index = modoContainer.children.length + 1;
+  const div = document.createElement("div");
+  div.className = "passo-item";
+  div.innerHTML = `
+  <div class="input-container">
+    <span>${index}.</span>
+    <textarea placeholder="Descreva o passo..." required></textarea>
+    <button type="button" class="botao-acao botao-lixeira" onclick="removerPasso(this)">
+      <span class="x-vermelho">❌</span>
+    </button>
+  </div>  
+  `;
 
+  modoContainer.appendChild(div);
+}
 
+// Função para remover passo
+function removerPasso(button) {
+  const div = button.closest(".passo-item");
+  div.remove();
+  atualizarNumeracaoPassos();
+}
 
+// 🔁 Atualiza a numeração dos passos após remoção
+function atualizarNumeracaoPassos() {
+  document.querySelectorAll(".passo-item").forEach((el, i) => {
+    el.querySelector("span").textContent = `${i + 1}.`;
+  });
+}
 
+// 📥 Função para abrir o modal
+abrirBtn.addEventListener("click", () => {
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
 
+  // Limpa campos antigos e adiciona pelo menos um novo
+  ingredientesContainer.innerHTML = "";
+  modoContainer.innerHTML = "";
+  adicionarIngrediente();
+  adicionarPasso();
+});
 
+// ❌ Função para fechar o modal
+fecharBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+  modal.style.display = "none";
+});
 
+// Clique fora do modal para fechar
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.classList.add("hidden");
+    modal.style.display = "none";
+  }
+});
 
+// ➕ Botões de adicionar
+addIngredienteBtn.addEventListener("click", adicionarIngrediente);
+addPassoBtn.addEventListener("click", adicionarPasso);
+
+// ✅ Submissão do formulário
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const novaReceita = {
+    titulo: document.getElementById("titulo").value.trim(),
+    tipo: document.getElementById("tipo").value,
+    ingredientes: [],
+    modoPreparo: [],
+    tempoPreparo: document.getElementById("tempo").value.trim(),
+    porcoes: document.getElementById("porcoes").value.trim()
+  };
+
+  // Ingredientes válidos
+  document.querySelectorAll(".ingrediente-item").forEach(item => {
+    const quantidade = item.querySelector(".quantidade").value.trim();
+    const produto = item.querySelector(".produto").value.trim();
+    const unidade = item.querySelector(".unidade").value;
+
+    if (quantidade && produto && unidade) {
+      novaReceita.ingredientes.push({ quantidade, produto, unidade });
+    }
+  });
+
+  // Passos válidos
+  document.querySelectorAll(".passo-item textarea").forEach(textarea => {
+    const texto = textarea.value.trim();
+    if (texto) {
+      novaReceita.modoPreparo.push(texto);
+    }
+  });
+
+  // ⚠️ Validação mínima
+  if (novaReceita.ingredientes.length === 0 || novaReceita.modoPreparo.length === 0) {
+    alert("Adicione pelo menos um ingrediente e um passo válido.");
+    return;
+  }
+
+  // Salvar a receita (ou enviar para backend)
+  console.log("✅ Receita adicionada:", novaReceita);
+
+  // Resetar e fechar modal
+  form.reset();
+  modal.classList.add("hidden");
+  modal.style.display = "none";
+});
 
 
 

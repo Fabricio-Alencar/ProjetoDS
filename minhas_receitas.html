@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="static/css/css_minhas_receitas/modal_receitas.css">
   <link rel="stylesheet" href="static/css/css_minhas_receitas/modal_exclusao.css">
   <link rel="stylesheet" href="static/css/css_minhas_receitas/modal_confirmacao.css">
+  <link rel="stylesheet" href="static/css/css_minhas_receitas/modal_criar_receitas.css">
 </head>
 <body>
   <header>
@@ -48,8 +49,11 @@
           <option value="outros">Outros</option>
         </select>
 
-        <div class="icone_botao add" id="addRecipeBtn">
-          <img src="static/imagens/mais.png" alt="Adicionar Receita">
+   
+
+        <!-- Botão flutuante de "Adicionar Receita" -->
+        <div class="icone_botao add" id="abrirModalBtn" role="button" tabindex="0">
+          <img src="static/imagens/mais.png" alt="Ícone de adicionar receita" />
           <span class="caixa_de_texto_botao">Adicionar Receita</span>
         </div>
 
@@ -93,10 +97,6 @@
           <h3>Ingredientes</h3>
           <ul id="modalIngredients" class="custom-list"></ul>
         </div>
-        <div class="modal_receitas-section">
-          <h3>Utensílios Necessários</h3>
-          <ul id="modalUtensils" class="custom-list"></ul>
-        </div>
       </div>
       <div class="modal_receitas-section">
         <h3>Modo de Preparo</h3>
@@ -134,6 +134,61 @@
   <img src="static/imagens/lixeira.png" alt="Ícone de exclusão bem-sucedida" class="icone-cifrao" />
   <span id="mensagemSucessoExcluir">Receita excluída com sucesso!</span>
 </div>
+
+
+
+
+
+<!-- Modal de Adicionar Receita -->
+<div id="modalAdicionar" class="modal hidden">
+  <div class="modal-conteudo">
+    <h2>Adicionar Nova Receita</h2>
+    <form id="formReceita">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" required>
+
+      <label for="tipo">Tipo:</label>
+      <select id="tipo" required>
+        <option value="doce">Doce</option>
+        <option value="salgado">Salgado</option>
+        <option value="outros">Outros</option>
+      </select>
+
+      <label>Ingredientes:</label>
+      <div id="ingredientesContainer">
+        <!-- Campos de ingrediente são adicionados via JS -->
+      </div>
+      <button type="button" id="addIngredienteBtn" class="botao-acao">+ Adicionar Ingrediente</button>
+
+      <label>Modo de Preparo:</label>
+      <div id="modoContainer">
+        <!-- Passos são adicionados via JS -->
+      </div>
+      <button type="button" id="addPassoBtn" class="botao-acao">+ Adicionar Passo</button>
+
+      <label for="tempo">Tempo de Preparo:</label>
+      <input type="text" id="tempo" required>
+
+      <label for="porcoes">Porções:</label>
+      <input type="text" id="porcoes" required>
+
+      <button type="submit">Salvar</button>
+      <button type="button" id="fecharModalBtn">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
   <footer>
     <div class="footer-content">
