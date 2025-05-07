@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema de Consultas Médicas</title>
+    <link rel="stylesheet" href="/static/css/css_login/css_login.css">
+</head>
+<body>
+
+    {% with mensagens=get_flashed_messages() %}
+        {% if mensagens %}
+            <div class="flash_alerta">
+                {% for mensagem in mensagens %}
+                    <p>{{ mensagem }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="page">
+        <form method="POST" class="formLogin" action="/login" aria-label="Formulário de Login">
+            <h1>Login</h1>
+            <p>Sistema de Consultas Médicas. Insira seus dados de login abaixo.</p>
+            
+            <!-- Tipo de Usuário -->
+            <label for="tipo_usuario">Tipo de Usuário</label>
+            <select id="tipo_usuario" name="tipo_usuario" required>
+                <option value="" disabled selected>Selecione</option>
+                <option value="Paciente">Paciente</option>
+                <option value="Profissional">Profissional</option>
+            </select>
+
+            <!-- Email -->
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Digite seu email" required autofocus>
+
+            <!-- Senha -->
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+
+            <!-- Botão de Login -->
+            <input type="submit" value="Entrar" class="btn">
+
+            <div class="registerLinks">
+                <a href="/cadastrar_paciente" class=>Cadastrar Paciente</a>
+                <a href="/cadastrar_profissional" class=>Cadastrar Profissional</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
