@@ -129,14 +129,23 @@ def perfil():
     return render_template('meu_perfil.html', nome_usuario=session['usuario_nome'])
 
 
-@app.route('/atualizar_conta', methods=['POST'])
-def atualizar_conta():
-    data = request.json
-    receita_id = data.get('receita_id')
-    preco_total = data.get('preco_total')
+@app.route('/atualizar_usuario', methods=['POST'])
+def atualizar_usuario():
+    if 'usuario_id' not in session:
+        return jsonify({'erro': 'Não autenticado'}), 401
 
-    receita_dao.atualizar_preco(preco_total, receita_id)
-    return jsonify({'status': 'sucesso', 'preco': preco_total})
+    data = request.json
+    usuario_id = session['usuario_id']
+    nome = data.get('nome')
+    email = data.get('email')
+    telefone = data.get('telefone')
+    prato = data.get('prato')
+    foto = data.get('foto')
+
+    usuario_dao.atualizar(usuario_id, nome, email, telefone, prato, foto)
+    session['usuario_nome'] = nome 
+
+    return jsonify({'status': 'sucesso'})
 
 
 @app.route('/excluir_conta', methods=['POST'])
@@ -147,40 +156,7 @@ def excluir_conta():
     usuario_dao.excluir(usuario_id)
     return jsonify({'status': 'conta excluída'})
 
-
-@app.route('/api/usuario', methods=['GET'])
-def api_listar_receitas():
-    if 'usuario_id' not in session:
-        return jsonify({'erro': 'Não autenticado'}), 401
-
-    usuario_id = session['usuario_id']
-    receitas = receita_dao.listar_por_usuario(usuario_id)
-
-    receitas_json = []
-    for r in receitas:
-        receita = r['receita']
-        ingredientes = r['ingredientes']
-        preparos = r['preparos']
-
-        receitas_json.append({
-            'id': receita.id,
-            'titulo': receita.nome,
-            'tipo': receita.tipo,
-            'preco': receita.preco,
-            'tempoPreparo': receita.tempo_preparo,
-            'porcoes': receita.porcao,
-            'ingredientes': [{
-                'produto': ing.nome,
-                'quantidade': ing.quantidade,
-                'unidade': ing.unidade
-            } for ing in ingredientes],
-            'modoPreparo': [prep.descricao for prep in sorted(preparos, key=lambda p: p.etapa)]
-        })
-
-    return jsonify(receitas_json)
-
 #===================================API´S (BUSCAR INFOS NO BD)==========================================
-
 @app.route('/api/receitas', methods=['GET'])
 def api_listar_receitas():
     if 'usuario_id' not in session:

@@ -18,7 +18,7 @@
 <body>
   <header>
     <div class="header-content">
-      <div class="header-title" id="usuarioTitulo"></div>
+      <div class="header-title" id="usuarioTitulo">Olá, {{ nome_usuario }}!</div>
     </div>
   </header>
 
@@ -38,22 +38,22 @@
     <div class="perfil-opcoes">
         <!-- Bloco: Foto + Botões -->
         <div class="foto-e-botoes">
-          <img src="/static/imagens/usuario.png" alt="Foto do Usuário" class="foto-usuario">
+          <img src="{{ foto_usuario }}" alt="Foto do Usuário" class="foto-usuario">
       
           <div class="botoes-perfil">
-            <button class="botao-editar">Editar Perfil</button>
-            <button class="botao-excluir">Excluir Perfil</button>
+            <button class="botao-editar" id="editarPerfilBtn">Editar Perfil</button>
+            <button class="botao-excluir" id="excluirPerfilBtn">Excluir Perfil</button>
           </div>
         </div>
       
         <!-- Bloco: Sobre Mim -->
         <div class="perfil-info">
           <h2>Sobre mim</h2>
-          <p><strong>Nome:</strong> João</p>
-          <p><strong>Email:</strong> joao@email.com</p>
-          <p><strong>Telefone:</strong> 12412412412</p>
-          <p><strong>Receitas Criadas:</strong> 12</p>
-          <p><strong>Prato Favorito:</strong> Lasanha de Berinjela</p>
+          <p><strong>Nome:</strong> {{ nome_usuario }}</p>
+          <p><strong>Email:</strong> {{ email_usuario }}</p>
+          <p><strong>Telefone:</strong> {{ telefone_usuario }}</p>
+          <p><strong>Receitas Criadas:</strong> {{ receitas_criadas }}</p>
+          <p><strong>Prato Favorito:</strong> {{ prato_favorito }}</p>
         </div>
       </div>
   </div>
@@ -64,22 +64,22 @@
       <h2>Editar Perfil</h2>
       <form id="formEditarPerfil">
         <label for="nomeUsuario">Nome:</label>
-        <input type="text" id="nomeUsuario" name="nomeUsuario" value="João">
+        <input type="text" id="nomeUsuario" name="nomeUsuario" value="{{ nome_usuario }}">
   
         <label for="emailUsuario">Email:</label>
-        <input type="email" id="emailUsuario" name="emailUsuario" value="joao@email.com">
+        <input type="email" id="emailUsuario" name="emailUsuario" value="{{ email_usuario }}">
   
-        <label for="receitasCriadas">Telefone:</label>
-        <input type="number" id="telefoneUsuario" name="telefoneUsuario" value="12">
+        <label for="telefoneUsuario">Telefone:</label>
+        <input type="number" id="telefoneUsuario" name="telefoneUsuario" value="{{ telefone_usuario }}">
   
         <label for="pratoFavorito">Prato Favorito:</label>
-        <input type="text" id="pratoFavorito" name="pratoFavorito" value="Lasanha de Berinjela">
+        <input type="text" id="pratoFavorito" name="pratoFavorito" value="{{ prato_favorito }}">
   
         <label for="fotoPerfil">Foto do Perfil:</label>
         <select id="fotoPerfil" name="fotoPerfil">
-          <option value="static/imagens/usuario.png">Imagem 1</option>
-          <option value="static/imagens/usuario2.png">Imagem 2</option>
-          <option value="static/imagens/usuario3.png">Imagem 3</option>
+          <option value="static/imagens/usuario.png" {% if foto_usuario == 'static/imagens/usuario.png' %}selected{% endif %}>Imagem 1</option>
+          <option value="static/imagens/usuario2.png" {% if foto_usuario == 'static/imagens/usuario2.png' %}selected{% endif %}>Imagem 2</option>
+          <option value="static/imagens/usuario3.png" {% if foto_usuario == 'static/imagens/usuario3.png' %}selected{% endif %}>Imagem 3</option>
         </select>
   
         <button type="submit">Salvar</button>
@@ -87,7 +87,6 @@
       </form>
     </div>
   </div>
-
 
   <!-- Modal de Sucesso da Mudança de Perfil -->
     <div id="modalSucessoPerfil" class="modal-sucesso" style="display: none;" role="alert" aria-live="polite">
@@ -108,7 +107,6 @@
     </div>
   
 
-
   <footer>
     <div class="footer-content">
       <p>Feito com ❤️</p>
@@ -118,6 +116,3 @@
   <script src="/static/js/js_meu_perfil.js"></script>
 </body>
 </html>
-
-
-

@@ -45,5 +45,15 @@ class UsuarioDAO:
         conn.commit()
         conn.close()
 
+    def atualizar(self, usuario_id, nome, email, telefone, prato, foto):
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            UPDATE usuarios
+            SET nome = ?, email = ?, telefone = ?, prato_favorito = ?, foto = ?
+            WHERE id = ?
+        ''', (nome, email, telefone, prato, foto, usuario_id))
+        self.conn.commit()
+
+
 
 
