@@ -22,9 +22,9 @@
 <body>
   <header>
     <div class="header-content">
-      <h1 class="header-title" id="usuarioTitulo" data-nome="{{ nome_usuario }}">Olá, {{ nome_usuario }}!</h1>
+      <h1 class="header-title" id="usuarioTitulo" data-nome="{{ nome_usuario|e }}"></h1>
     </div>
-  </header>
+  </header>  
 
   <div class="logo-circle">
     <img src="/static/imagens/Logo_site_trabalho.png" alt="Logo do Site"/>
@@ -39,7 +39,6 @@
         <a href="/meu_perfil" class="option">Meu Perfil</a>
       </div>
     </div>
-
     <div class="section">
       <div class="filters-actions">
         <input type="text" id="searchInput" placeholder="Buscar receita...">
@@ -49,16 +48,11 @@
             <option value="salgado">Salgado</option>
             <option value="outros">Outros</option>
         </select>
-    
-
-   
-
         <!-- Botão flutuante de "Adicionar Receita" -->
         <div class="icone_botao add" id="abrirModalBtn" role="button" tabindex="0">
           <img src="/static/imagens/mais.png" alt="Ícone de adicionar receita" />
           <span class="caixa_de_texto_botao">Adicionar Receita</span>
         </div>
-
         <!-- Botão flutuante de "Excluir Receita" -->
         <div class="icone_botao delete" id="deleteRecipeBtn" role="button" tabindex="0">
           <img src="/static/imagens/lixeira.png" alt="Ícone de excluir receita" />
@@ -67,11 +61,15 @@
       </div>
     </div>
 
+
     <div class="section">
+              <!-- Botão flutuante de "Excluir Receita" -->
+
       <div id="recipesList"></div>
     </div>
   </div>
 
+  <!-- Modal de visualizar receitas -->
   <div id="recipeModal" class="modal_receitas">
     <div class="modal_receitas-content">
       <div class="modal_receitas-header">
@@ -108,14 +106,10 @@
   </div>
 
 
-
-
-
   <!-- Modal de Exclusão -->
 <div id="modalExcluir" class="modal-adicionar hidden" role="dialog" aria-modal="true" aria-labelledby="tituloModalExcluir">
   <div class="modal-conteudo" onclick="event.stopPropagation()">
     <h2 id="tituloModalExcluir">Excluir Receita</h2>
-
     <label for="pesquisaExcluir">Buscar Receita:</label>
     <input
       type="text"
@@ -123,9 +117,7 @@
       placeholder="Digite o nome da receita..."
       autocomplete="off"
     />
-
     <div id="listaReceitasExcluir" class="lista-receitas"></div>
-
     <button id="confirmarExclusao" class="hidden" disabled>Excluir</button>
   <button type="button" id="botaoFecharModal" onclick="fecharModalExcluir()">Fechar</button>
   </div>
@@ -136,8 +128,6 @@
   <img src="/static/imagens/lixeira.png" alt="Ícone de exclusão bem-sucedida" class="icone-cifrao" />
   <span id="mensagemSucessoExcluir">Receita excluída com sucesso!</span>
 </div>
-
-
 
 
 <!-- Modal de Adicionar Receita -->
@@ -154,52 +144,25 @@
         <option value="salgado">Salgado</option>
         <option value="outros">Outros</option>
       </select>
-
       <label for="ingredientes">Ingredientes:</label>
       <div id="ingredientesContainer">
         <!-- Campos de ingrediente são adicionados via JS -->
       </div>
       <button type="button" id="addIngredienteBtn" class="botao-acao">+ Adicionar Ingrediente</button>
-
       <label for="modo_preparo">Modo de Preparo:</label>
       <div id="modoContainer">
         <!-- Passos são adicionados via JS -->
       </div>
       <button type="button" id="addPassoBtn" class="botao-acao">+ Adicionar Passo</button>
-
       <label for="tempo">Tempo de Preparo:</label>
       <input type="text" id="tempo" name="tempo" required>
-
       <label for="porcoes">Porções:</label>
       <input type="text" id="porcoes" name="porcoes" required>
-
       <button type="submit">Salvar</button>
       <button type="button" id="fecharModalBtn">Cancelar</button>
     </form>
   </div>
 </div>
-
-
-
-
-
-<!-- Modal de Aviso de Receita Compartilhada -->
-<div id="modalAvisoReceita" class="modal-aviso" role="dialog" aria-modal="true">
-  <div class="modal-aviso-conteudo">
-    <h2>Receita Compartilhada</h2>
-    <p id="avisoMensagem">Você recebeu uma receita compartilhada por um amigo.</p>
-    <div class="modal-aviso-botoes">
-      <button id="aceitarReceitaBtn" class="botao-aceitar">Aceitar</button>
-      <button id="rejeitarReceitaBtn" class="botao-rejeitar">Rejeitar</button>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
 
 
 
@@ -209,6 +172,6 @@
     </div>
   </footer>
 
-  <script src="/static/js/js_minhas_receitas.js"></script>
+  <script src="/static/js/minhas_receitas.js"></script>
 </body>
 </html>

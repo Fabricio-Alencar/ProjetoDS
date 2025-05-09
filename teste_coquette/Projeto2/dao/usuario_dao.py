@@ -5,13 +5,6 @@ class UsuarioDAO:
     def __init__(self, db_path='database.db'):
         self.db_path = db_path
 
-    import sqlite3
-from models.usuario import Usuario
-
-class UsuarioDAO:
-    def __init__(self, db_path='database.db'):
-        self.db_path = db_path
-
     def buscar_por_email(self, email):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()

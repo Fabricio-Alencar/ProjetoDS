@@ -2,18 +2,20 @@ from flask import (
     Flask, render_template, request,
     redirect, url_for, session, jsonify
 )
+
 from models.receita import Receita, Preparos, Ingrediente
 from models.usuario import Usuario
+from models.cardapio import Cardapio, Refeicoes_Cardapio
 from dao.receita_dao import ReceitaDAO
 from dao.usuario_dao import UsuarioDAO
-
-
+from dao.cardapio_dao import CardapioDAO
 
 print("Iniciando o aplicativo Flask...")
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta'
 usuario_dao = UsuarioDAO()
 receita_dao = ReceitaDAO()
+cardapio_dao = CardapioDAO()
 
 
 #=======================================ROTAS LOGIN===========================================
@@ -31,7 +33,7 @@ def login():
         if usuario and usuario.senha == senha:
             session['usuario_id'] = usuario.id
             session['usuario_nome'] = usuario.nome
-            return redirect(url_for('minhas_receitas'))
+            return redirect(url_for('minhas_receitas', id_usuario=usuario.id, nome_usuario = usuario.nome))
         return "Login inválido", 401
     return render_template('login.html')
 
@@ -42,14 +44,11 @@ def cadastro():
         nome = request.form['nome']
         email = request.form['email']
         senha = request.form['senha']
-
         if usuario_dao.buscar_por_email(email):
             return "Email já cadastrado", 400
-
         novo_usuario = Usuario(None, nome, email, senha)
         usuario_dao.inserir(novo_usuario)
         return redirect(url_for('login'))
-
     return render_template('cadastro.html')
 
 
@@ -66,9 +65,11 @@ def logout():
 
 @app.route('/minhas_receitas')
 def minhas_receitas():
+    id_usuario = session['usuario_id']  
+    nome_usuario = session['usuario_nome']
     if 'usuario_id' not in session:
         return redirect(url_for('login'))
-    return render_template('minhas_receitas.html', nome_usuario=session['usuario_nome'])
+    return render_template('minhas_receitas.html', nome_usuario=nome_usuario, id_usuario=id_usuario)
 
 
 
@@ -119,6 +120,61 @@ def atualizar_preco():
     receita_dao.atualizar_preco(preco_total, receita_id)
     return jsonify({'status': 'sucesso', 'preco': preco_total})
 
+
+
+##=======================================ROTAS CARDAPIO===========================================
+@app.route('/cardapio')
+def cardapio():
+    id_usuario = session['usuario_id']  
+    nome_usuario = session['usuario_nome']
+    if 'usuario_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('cardapio.html', nome_usuario=nome_usuario, id_usuario=id_usuario)
+
+# Rota para adicionar uma receita ao cardápio
+@app.route('/cardapio/adicionar', methods=['POST'])
+def adicionar_receita_cardapio():
+    if 'usuario_id' not in session:
+        return jsonify({'erro': 'Usuário não autenticado'}), 401
+
+    dados = request.json
+    usuario_id = session['usuario_id']
+    dia_semana = session['dia_semana']
+    tipo = session['tipo']
+    receita_id = session['receita_id']
+
+    cardapio_dao.adicionar_receita_cardapio(usuario_id, dia_semana, tipo, receita_id)
+    return jsonify({'mensagem': 'Receita adicionada ao cardápio com sucesso'}), 200
+
+
+# Rota para excluir uma receita do cardápio
+@app.route('/api/cardapio/excluir', methods=['POST'])
+def excluir_receita_cardapio():
+    if 'usuario_id' not in session:
+        return jsonify({'erro': 'Usuário não autenticado'}), 401
+
+    dados = request.json
+    usuario_id = session['usuario_id']
+    dia_semana = dados.get('dia_semana')
+    tipo = dados.get('tipo')
+    receita_id = dados.get('receita_id')
+
+    if not all([dia_semana, tipo, receita_id]):
+        return jsonify({'erro': 'Dados incompletos'}), 400
+
+    cardapio_dao.excluir_receita_cardapio(usuario_id, dia_semana, tipo, receita_id)
+    return jsonify({'mensagem': 'Receita removida do cardápio com sucesso'}), 200
+
+
+# Rota para visualizar o cardápio do usuário logado
+@app.route('/api/cardapio', methods=['GET'])
+def visualizar_cardapio():
+    if 'usuario_id' not in session:
+        return jsonify({'erro': 'Usuário não autenticado'}), 401
+
+    usuario_id = session['usuario_id']
+    cardapio = cardapio_dao.visualizar_receitas_cardapio(usuario_id)
+    return jsonify(cardapio), 200
 
 #=======================================ROTAS MEU PERFIL===========================================
 

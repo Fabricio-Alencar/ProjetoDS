@@ -2,7 +2,7 @@
 let receitas = []; // Lista de receitas será preenchida via fetch
 let receitaAtual = null; // Receita sendo precificada
 
-// Buscar nome do usuário autenticado via sessão (Flask deve fornecer isso no HTML renderizado)
+// Buscar nome do usuário pelo flask
 const usuario = document.getElementById('usuarioTitulo').dataset.nome || "Usuário";
 document.getElementById('usuarioTitulo').textContent = `Olá, ${usuario}!`;
 
