@@ -46,28 +46,26 @@ class CardapioDAO:
         cursor = conn.cursor()
         cursor.execute("""
             SELECT rc.dia_semana, rc.tipo, rc.id_receita_FK
-            FROM Refeicoes_Cardapio rc
-            JOIN Cardapio c ON c.id = rc.refeicoes_Cardapio_FK
+            FROM Cardapio c
+            JOIN Refeicoes_Cardapio rc ON c.refeicoes_Cardapio_FK = rc.id
             WHERE c.id_usuario_FK = ?
         """, (usuario_id,))
         
         dados = cursor.fetchall()
         conn.close()
 
-        # Inicializa o dicionário para o cardápio
         resultado = {dia: {'Café da Manhã': [], 'Almoço': [], 'Jantar': []} for dia in
                     ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']}
 
-        # Organiza os dados no formato esperado
         for row in dados:
-            dia_semana = row[0]
-            tipo_refeicao = row[1]
-            id_receita = row[2]
-            
-            # Adiciona a receita à refeição correspondente no dia
-            if dia_semana in resultado:
-                if tipo_refeicao in resultado[dia_semana]:
-                    resultado[dia_semana][tipo_refeicao].append(str(id_receita))
+            dia_semana = row["dia_semana"]
+            tipo_refeicao = row["tipo"]
+            id_receita = row["id_receita_FK"]
+
+            if dia_semana in resultado and tipo_refeicao in resultado[dia_semana]:
+                resultado[dia_semana][tipo_refeicao].append(str(id_receita))
 
         return resultado
+
+
 

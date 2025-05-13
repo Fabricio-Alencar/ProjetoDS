@@ -131,14 +131,11 @@ def api_adicionar_receita():
         Ingrediente(None, i['produto'], float(i['quantidade']), i['unidade'], None)
         for i in dados['ingredientes']
     ]
-
     preparos = [
         Preparos(None, idx + 1, passo, None)
         for idx, passo in enumerate(dados['modoPreparo'])
     ]
-
     receita_dao.inserir(receita, ingredientes, preparos, usuario_id)
-
     return jsonify({'mensagem': 'Receita adicionada com sucesso'})
 
 
@@ -219,15 +216,13 @@ def excluir_receita_cardapio():
 
 @app.route('/api/cardapio', methods=['GET'])
 def visualizar_cardapio():
-    # Verifica se o 'usuario_id' está presente na sessão
     if 'usuario_id' not in session:
-        print("Usuário não autenticado. Sessão:", session)  # Adicionando log para verificar a sessão
         return jsonify({'erro': 'Usuário não autenticado'}), 401
 
     usuario_id = session['usuario_id']
-    print(f"Usuário autenticado com id: {usuario_id}")  # Adicionando log para verificar o id
     cardapio = cardapio_dao.visualizar_receitas_cardapio(usuario_id)
     return jsonify(cardapio), 200
+
 
 
 
